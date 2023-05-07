@@ -1,6 +1,6 @@
 ﻿using OAuthService.Core.Types;
 
-namespace OAuthService.Interfaces
+namespace OAuthService.Interfaces.Accessors
 {
     public interface IClientAccessor
     {

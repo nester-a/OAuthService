@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using OAuthService.Core.Extensions;
 using OAuthService.Interfaces.Builders;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -13,7 +14,6 @@ namespace OAuthService.Services.Builders
         List<Claim> claims = new();
         DateTime expiresIn;
         DateTime notBefore;
-        DateTime issuedAt;
         SymmetricSecurityKey ssk = null!;
 
         public ITokenBuilder SignedWithKey(string key)
@@ -54,7 +54,7 @@ namespace OAuthService.Services.Builders
 
         public ITokenBuilder AddIat(DateTime iat)
         {
-            issuedAt = iat;
+            claims.Add(new Claim(JwtRegisteredClaimNames.Iat, iat.ToUnixTimestamp().ToString(), ClaimValueTypes.UInteger32));
             return this;
         }
 

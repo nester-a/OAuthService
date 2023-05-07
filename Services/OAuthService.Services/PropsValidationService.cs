@@ -1,4 +1,4 @@
-﻿using OAuthService.Interfaces;
+﻿using OAuthService.Interfaces.Validation;
 
 namespace OAuthService.Services
 {

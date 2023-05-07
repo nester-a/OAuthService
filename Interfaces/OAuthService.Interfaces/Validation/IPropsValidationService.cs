@@ -1,4 +1,4 @@
-﻿namespace OAuthService.Interfaces
+﻿namespace OAuthService.Interfaces.Validation
 {
     public interface IPropsValidationService
     {

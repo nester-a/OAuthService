@@ -1,6 +1,6 @@
-using OAuthService.Interfaces;
+using OAuthService.Data.DependencyInjection;
 using OAuthService.MVC;
-using OAuthService.Services;
+using OAuthService.Services.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,8 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IRequestFactory, RequestFactory>();
-builder.Services.AddTransient<IPropsValidationService, PropsValidationService>();
+builder.Services.AddOAuthServices();
+builder.Services.AddOAuthStorages();
 
 var app = builder.Build();
 

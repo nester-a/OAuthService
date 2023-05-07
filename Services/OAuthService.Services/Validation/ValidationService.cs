@@ -1,34 +1,41 @@
-﻿using OAuthService.Core.Base;
-using OAuthService.Core.Constans;
+﻿using OAuthService.Core.Constans;
 using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types.Requests;
-using OAuthService.Core.Types.Requests.Obj;
-using OAuthService.Interfaces;
+using OAuthService.Interfaces.Validation;
 
-namespace OAuthService.Services
+namespace OAuthService.Services.Validation
 {
-    public class RequestFactory : IRequestFactory
+    public class ValidationService : IValidationService
     {
         private readonly IPropsValidationService propsValidation;
 
-        public RequestFactory(IPropsValidationService propsValidation)
+        public ValidationService(IPropsValidationService propsValidation)
         {
             this.propsValidation = propsValidation;
         }
 
-        public async Task<IRequest> CreateRequestAsync(AccessTokenRequest request, CancellationToken cancellation = default)
+        public async Task ValidateAsync(AccessTokenRequest request, CancellationToken cancellation = default)
         {
             cancellation.ThrowIfCancellationRequested();
 
             try
             {
-                return request.GrandType switch
+                switch (request.GrandType)
                 {
-                    GrantType.AuthorizationCode => await ValidateCodeRequestAndBuildObjAsync(request),
-                    GrantType.ResourceOwnerPasswordCredentials => await ValidatePasswordRequestAndBuildObjAsync(request),
-                    GrantType.ClientCredentials => await ValidateCredentialsRequestAndBuildObjAsync(request),
-                    GrantType.RefreshToken => await ValidateRefreshRequestAndBuildObjAsync(request),
-                    _ => throw new UnsupportedGrantTypeException($"{request.GrandType} is not supported by this service")
+                    case GrantType.AuthorizationCode:
+                        await ValidateCodeRequestAndBuildObjAsync(request);
+                        break;
+                    case GrantType.ResourceOwnerPasswordCredentials:
+                        await ValidatePasswordRequestAndBuildObjAsync(request);
+                        break;
+                    case GrantType.ClientCredentials:
+                        await ValidateCredentialsRequestAndBuildObjAsync(request);
+                        break;
+                    case GrantType.RefreshToken:
+                        await ValidateRefreshRequestAndBuildObjAsync(request);
+                        break;
+                    default:
+                        throw new UnsupportedGrantTypeException($"{request.GrandType} is not supported by this service");
                 };
             }
             catch
@@ -37,7 +44,7 @@ namespace OAuthService.Services
             }
         }
 
-        async Task<CodeRequestObj> ValidateCodeRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellation = default)
+        async Task ValidateCodeRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellation = default)
         {
             cancellation.ThrowIfCancellationRequested();
 
@@ -47,7 +54,6 @@ namespace OAuthService.Services
             try
             {
                 await ValidateGrantTypeAsync(shoulBeNotNullOrEmpty, shoulBeNullOrEmpty, cancellation);
-                return new CodeRequestObj(request);
             }
             catch
             {
@@ -56,7 +62,7 @@ namespace OAuthService.Services
 
         }
 
-        async Task<PasswordRequestObj> ValidatePasswordRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
+        async Task ValidatePasswordRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -66,7 +72,6 @@ namespace OAuthService.Services
             try
             {
                 await ValidateGrantTypeAsync(shoulBeNotNullOrEmpty, shoulBeNullOrEmpty, cancellationToken);
-                return new PasswordRequestObj(request);
             }
             catch
             {
@@ -74,7 +79,7 @@ namespace OAuthService.Services
             }
         }
 
-        async Task<CredentialsRequestObj> ValidateCredentialsRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
+        async Task ValidateCredentialsRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -83,7 +88,6 @@ namespace OAuthService.Services
             try
             {
                 await ValidateGrantTypeAsync(Array.Empty<string?>(), shoulBeNullOrEmpty, cancellationToken);
-                return new CredentialsRequestObj(request);
             }
             catch
             {
@@ -91,7 +95,7 @@ namespace OAuthService.Services
             }
         }
 
-        async Task<RefreshingRequestObj> ValidateRefreshRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
+        async Task ValidateRefreshRequestAndBuildObjAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -101,7 +105,6 @@ namespace OAuthService.Services
             try
             {
                 await ValidateGrantTypeAsync(shoulBeNotNullOrEmpty, shoulBeNullOrEmpty, cancellationToken);
-                return new RefreshingRequestObj(request);
             }
             catch
             {
