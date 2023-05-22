@@ -20,7 +20,7 @@ namespace OAuthService.Services.Validation
 
             try
             {
-                switch (request.GrandType)
+                switch (request.GrantType)
                 {
                     case GrantType.AuthorizationCode:
                         await ValidateCodeRequestAndBuildObjAsync(request);
@@ -35,7 +35,7 @@ namespace OAuthService.Services.Validation
                         await ValidateRefreshRequestAndBuildObjAsync(request);
                         break;
                     default:
-                        throw new UnsupportedGrantTypeException($"{request.GrandType} is not supported by this service");
+                        throw new UnsupportedGrantTypeException($"{request.GrantType} is not supported by this service");
                 };
             }
             catch

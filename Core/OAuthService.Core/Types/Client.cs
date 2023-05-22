@@ -6,6 +6,5 @@
         public string Secret { get; set; } = string.Empty;
         public string TokenKey { get; set; } = string.Empty;
         public string[] SupportedGrantTypes { get; set; } = Array.Empty<string>();
-        public bool RequiresRefreshToken { get; set; }
     }
 }
