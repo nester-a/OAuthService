@@ -17,6 +17,7 @@ namespace OAuthService.Services.DependencyInjection
         public static IServiceCollection AddOAuthServices(this IServiceCollection services)
         {
             services.AddScoped<IRequestProcessor<ICodeGrantTokenRequest>, CodeRequestProcessor>();
+            services.AddScoped<IRequestProcessor<IPasswordGrantTokenRequest>, PasswordRequestProcessor>();
             services.AddScoped<ITokenBuilder, TokenBuilder>();
             services.AddScoped<IAccessTokenResponseBuilder, AccessTokenResponseBuilder>();
             services.AddScoped<IPropsValidationService, PropsValidationService>();
