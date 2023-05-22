@@ -24,7 +24,7 @@ namespace OAuthService.Services.Processors.Base
             this.tokenStorage = tokenStorage;
             this.accessTokenResponseBuilder = accessTokenResponseBuilder;
         }
-        protected async Task<IResponse> BuildResponseAsync(string responseTokenSub, bool refreshTokenRequired, CancellationToken cancellationToken = default)
+        protected async Task<IResponse> BuildResponseAsync(string responseTokenSub, TokenSubject tokenSubjectType, bool refreshTokenRequired, CancellationToken cancellationToken = default)
         {
             var client = clientAccessor.Client;
 
@@ -42,7 +42,14 @@ namespace OAuthService.Services.Processors.Base
                                           .AddSub(responseTokenSub)
                                           .BuildAsync(cancellationToken);
 
-            await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, cancellationToken);
+            if(tokenSubjectType is TokenSubject.User)
+            {
+                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, responseTokenSub, cancellationToken);
+            }
+            else
+            {
+                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, null, cancellationToken);
+            }
 
             accessTokenResponseBuilder.AddAccessToken(token)
                                       .AddTokenType("Bearer")
@@ -53,12 +60,23 @@ namespace OAuthService.Services.Processors.Base
                 jti = Guid.NewGuid().ToString();
                 var refreshToken = Guid.NewGuid().ToString();
                 exp = now.AddDays(7);
-                await tokenStorage.SaveTokenAsync(jti, refreshToken, TokenType.RefreshToken, exp, cancellationToken);
+
+                if (tokenSubjectType is TokenSubject.User)
+                {
+
+                    await tokenStorage.SaveTokenAsync(jti, refreshToken, TokenType.RefreshToken, exp, responseTokenSub, cancellationToken);
+                }
+                else
+                {
+
+                    await tokenStorage.SaveTokenAsync(jti, refreshToken, TokenType.RefreshToken, exp, null, cancellationToken);
+                }
 
                 accessTokenResponseBuilder.AddRefreshToken(refreshToken);
             }
 
             return accessTokenResponseBuilder.Build();
         }
+
     }
 }

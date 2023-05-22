@@ -18,6 +18,8 @@ namespace OAuthService.Services.DependencyInjection
         {
             services.AddScoped<IRequestProcessor<ICodeGrantTokenRequest>, CodeRequestProcessor>();
             services.AddScoped<IRequestProcessor<IPasswordGrantTokenRequest>, PasswordRequestProcessor>();
+            services.AddScoped<IRequestProcessor<IClientCredentialTokenRequest>, ClientCredentialRequestProcessor>();
+            services.AddScoped<IRequestProcessor<IRefreshingAccessTokenRequest>, RefreshingAccessTokenRequestProcessor>();
             services.AddScoped<ITokenBuilder, TokenBuilder>();
             services.AddScoped<IAccessTokenResponseBuilder, AccessTokenResponseBuilder>();
             services.AddScoped<IPropsValidationService, PropsValidationService>();

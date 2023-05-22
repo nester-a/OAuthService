@@ -3,7 +3,7 @@ using OAuthService.Core.Base;
 
 namespace OAuthService.Core.Types.Requests
 {
-    public record AccessTokenRequest : ICodeGrantTokenRequest, IPasswordGrantTokenRequest, IRefreshingAccessTokenRequest
+    public record AccessTokenRequest : ICodeGrantTokenRequest, IPasswordGrantTokenRequest, IRefreshingAccessTokenRequest, IClientCredentialTokenRequest
     {
         [FromForm(Name = "grant_type")]
         public string GrantType { get; set; } = string.Empty;

@@ -7,6 +7,7 @@ using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Interfaces.Storages;
 using OAuthService.Services.Processors.Base;
+using OAuthService.Core.Enums;
 
 namespace OAuthService.Services.Processors
 {
@@ -38,7 +39,7 @@ namespace OAuthService.Services.Processors
                     throw new InvalidGrantException(nameof(id));
                 }
 
-                return await BuildResponseAsync(id, true, cancellationToken);
+                return await BuildResponseAsync(id, TokenSubject.User, true, cancellationToken);
             }
             catch (OAuthException ex)
             {
