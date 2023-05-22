@@ -31,14 +31,14 @@ namespace OAuthService.Services.Processors
 
             try
             {
-                var code = await codeStorage.GetCodeByCodeAndClientIdAsync(request.Code!, request.ClientId!, cancellationToken);
+                var userId = await codeStorage.GetUserIdByCodeAndClientIdAsync(request.Code!, request.ClientId!, cancellationToken);
 
-                if (code is null || code?.ValidTillUtc < DateTime.UtcNow)
+                if (string.IsNullOrWhiteSpace(userId))
                 {
-                    throw new InvalidGrantException(nameof(code));
+                    throw new InvalidGrantException(nameof(request.Code));
                 }
 
-                return await BuildResponseAsync(code!.UserId, TokenSubject.User, true, cancellationToken);
+                return await BuildResponseAsync(userId, TokenSubject.User, true, cancellationToken);
             }
             catch (OAuthException ex)
             {

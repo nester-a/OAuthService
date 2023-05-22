@@ -1,9 +1,7 @@
-﻿using OAuthService.Core.Types;
-
-namespace OAuthService.Interfaces.Storages
+﻿namespace OAuthService.Interfaces.Storages
 {
     public interface ICodeStorage
     {
-        Task<Code> GetCodeByCodeAndClientIdAsync(string code, string clientId, CancellationToken cancellationToken = default);
+        Task<string> GetUserIdByCodeAndClientIdAsync(string code, string clientId, CancellationToken cancellationToken = default);
     }
 }
