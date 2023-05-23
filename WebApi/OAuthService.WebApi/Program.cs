@@ -11,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddOAuthServices();
-builder.Services.AddOAuthStorages();
+builder.Services.AddTestOAuthStorages();
 
 var app = builder.Build();
 

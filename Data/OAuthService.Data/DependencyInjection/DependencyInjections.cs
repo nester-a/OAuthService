@@ -5,7 +5,7 @@ namespace OAuthService.Data.DependencyInjection
 {
     public static class DependencyInjections
     {
-        public static IServiceCollection AddOAuthStorages(this IServiceCollection services)
+        public static IServiceCollection AddTestOAuthStorages(this IServiceCollection services)
         {
             services.AddScoped<ITokenStorage, TokenStorage>();
             services.AddScoped<IClientStorage, ClientStorage>();
