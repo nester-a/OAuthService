@@ -1,5 +1,4 @@
-﻿using OAuthService.Core.Types;
-using OAuthService.Interfaces.Storages;
+﻿using OAuthService.Interfaces.Storages;
 
 namespace OAuthService.Data
 {

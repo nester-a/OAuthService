@@ -4,6 +4,6 @@ namespace OAuthService.Interfaces.Storages
 {
     public interface IClientStorage
     {
-        Task<Client> GetClientByIdAsync(string id, CancellationToken cancellationToken = default);
+        Task<Client> GetClientByIdAndNullableSecretAsync(string id, string? secret = null, CancellationToken cancellationToken = default);
     }
 }

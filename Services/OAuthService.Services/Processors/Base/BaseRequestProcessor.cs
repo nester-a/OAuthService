@@ -31,7 +31,7 @@ namespace OAuthService.Services.Processors.Base
             var now = DateTime.UtcNow;
             var exp = now.AddDays(1);
             var jti = Guid.NewGuid().ToString();
-            var key = client.TokenKey;
+            var key = client!.TokenKey;
 
             var token = await tokenBuilder.SignedWithKey(key)
                                           .AddIat(now)

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using OAuthService.Core.Base;
+using OAuthService.Interfaces;
 using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Facroies;
@@ -24,6 +25,7 @@ namespace OAuthService.Services.DependencyInjection
             services.AddScoped<IAccessTokenResponseBuilder, AccessTokenResponseBuilder>();
             services.AddScoped<IPropsValidationService, PropsValidationService>();
             services.AddScoped<IValidationService, ValidationService>();
+            services.AddScoped<IClientAuthenticationService, ClientAuthenticationService>();
             services.AddScoped<IClientAccessor, ClientAccessor>();
             services.AddScoped<IResponseFactory, ResponseFactory>();
             return services;

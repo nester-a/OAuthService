@@ -25,7 +25,7 @@ namespace OAuthService.Services.Processors
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var sub = clientAccessor.Client.Id;
+            var sub = clientAccessor.Client!.Id;
 
             return await BuildResponseAsync(sub, TokenSubject.Client, false, cancellationToken);
         }
