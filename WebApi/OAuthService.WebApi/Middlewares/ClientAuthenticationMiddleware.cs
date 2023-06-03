@@ -24,14 +24,12 @@ namespace OAuthService.MVC
             if(path.HasValue && !path.Value.Contains("/Token"))
             {
                 await next.Invoke(context);
-                return;
             }
-
-            var form = context.Request.Form;
-            var grant = form[GrantType].ToString();
-
-            try
+            else
             {
+                var form = context.Request.Form;
+                var grant = form[GrantType].ToString();
+
                 switch (grant)
                 {
                     case AccessTokenRequestGrantType.AuthorizationCode when string.IsNullOrWhiteSpace(form[ClientId]):
@@ -48,13 +46,6 @@ namespace OAuthService.MVC
                 }
 
                 await next.Invoke(context);
-            }
-            catch (OAuthException ex)
-            {
-                var error = new ErrorResponse(ex);
-                var json = JsonConvert.SerializeObject(error);
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync(json);
             }
         }
     }
