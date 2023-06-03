@@ -1,4 +1,4 @@
-﻿using OAuthService.Core.Constans;
+﻿using static OAuthConstans.ErrorResponseErrorCode;
 using OAuthService.Core.Exceptions.Base;
 
 namespace OAuthService.Core.Exceptions
@@ -7,6 +7,6 @@ namespace OAuthService.Core.Exceptions
     public class InvalidRequestException : OAuthException
     {
         public InvalidRequestException(string? errorDescription)
-            : base(OAuthError.InvalidRequest, errorDescription) { }
+            : base(InvalidRequest, errorDescription) { }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using OAuthService.Core.Base;
-using OAuthService.Core.Constans;
+using static OAuthConstans.AccessTokenRequestGrantType;
 using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types.Requests;
 using OAuthService.Interfaces.Facroies;
@@ -30,10 +30,10 @@ namespace OAuthService.Services.Factories
 
             return request.GrantType switch
             {
-                GrantType.AuthorizationCode => await codeRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                GrantType.ResourceOwnerPasswordCredentials => await passwordRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                GrantType.ClientCredentials => await clientCredentialRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                GrantType.RefreshToken => await refreshingAccessRequest.ProcessToResponseAsync(request, cancellationToken),
+                AuthorizationCode => await codeRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
+                Password => await passwordRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
+                ClientCredentials => await clientCredentialRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
+                RefreshToken => await refreshingAccessRequest.ProcessToResponseAsync(request, cancellationToken),
                 _ => throw new ServerErrorException("Smth wrong")
             };
         }

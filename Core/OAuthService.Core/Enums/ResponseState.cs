@@ -1,4 +1,4 @@
-﻿namespace OAuthService.Core.Constans
+﻿namespace OAuthService.Core.Enums
 {
     public enum ResponseState
     {

@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
-using OAuthService.Core.Constans;
+using OAuthConstans;
+using static OAuthConstans.AccessTokenRequestParameters;
 using OAuthService.Core.Exceptions;
 using OAuthService.Core.Exceptions.Base;
 using OAuthService.Core.Types.Responses;
@@ -23,23 +24,24 @@ namespace OAuthService.MVC
             if(path.HasValue && !path.Value.Contains("/Token"))
             {
                 await next.Invoke(context);
+                return;
             }
 
             var form = context.Request.Form;
-            var grant = form[RequestFormField.GrantType].ToString();
+            var grant = form[GrantType].ToString();
 
             try
             {
                 switch (grant)
                 {
-                    case GrantType.AuthorizationCode when string.IsNullOrWhiteSpace(form[RequestFormField.ClientId]):
-                    case GrantType.ResourceOwnerPasswordCredentials:
-                    case GrantType.ClientCredentials:
-                    case GrantType.RefreshToken:
+                    case AccessTokenRequestGrantType.AuthorizationCode when string.IsNullOrWhiteSpace(form[ClientId]):
+                    case AccessTokenRequestGrantType.Password:
+                    case AccessTokenRequestGrantType.ClientCredentials:
+                    case AccessTokenRequestGrantType.RefreshToken:
                         await clientAuthenticationService.AuthenticateClientByAuthorizationHeaderAsync(context.Request.Headers);
                         break;
-                    case GrantType.AuthorizationCode:
-                        await clientAuthenticationService.AuthenticateClientByIdAsync(form[RequestFormField.ClientId]!);
+                    case AccessTokenRequestGrantType.AuthorizationCode:
+                        await clientAuthenticationService.AuthenticateClientByIdAsync(form[ClientId]!);
                         break;
                     default:
                         throw new UnsupportedGrantTypeException("Request grant type is not supported by this service");

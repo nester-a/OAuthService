@@ -1,4 +1,4 @@
-﻿using OAuthService.Core.Constans;
+﻿using static OAuthConstans.AccessTokenRequestGrantType;
 using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types.Requests;
 using OAuthService.Interfaces.Validation;
@@ -22,16 +22,16 @@ namespace OAuthService.Services.Validation
             {
                 switch (request.GrantType)
                 {
-                    case GrantType.AuthorizationCode:
+                    case AuthorizationCode:
                         await ValidateCodeRequestAndBuildObjAsync(request);
                         break;
-                    case GrantType.ResourceOwnerPasswordCredentials:
+                    case Password:
                         await ValidatePasswordRequestAndBuildObjAsync(request);
                         break;
-                    case GrantType.ClientCredentials:
+                    case ClientCredentials:
                         await ValidateCredentialsRequestAndBuildObjAsync(request);
                         break;
-                    case GrantType.RefreshToken:
+                    case RefreshToken:
                         await ValidateRefreshRequestAndBuildObjAsync(request);
                         break;
                     default:

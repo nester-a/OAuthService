@@ -7,7 +7,7 @@ namespace OAuthService.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OAuthController : ControllerBase
+    public class OAuthController : Controller
     {
         private readonly IValidationService validationService;
         private readonly IResponseFactory responseFactory;
@@ -26,10 +26,10 @@ namespace OAuthService.WebApi.Controllers
         {
             using (var cancellationTokenSource = new CancellationTokenSource())
             {
-                var token = cancellationTokenSource.Token;
-                await validationService.ValidateAsync(accessTokenRequest, token);
+                var cancellationToken = cancellationTokenSource.Token;
+                await validationService.ValidateAsync(accessTokenRequest, cancellationToken);
 
-                var response = await responseFactory.CreateResponseAsync(accessTokenRequest, token);
+                var response = await responseFactory.CreateResponseAsync(accessTokenRequest, cancellationToken);
 
                 return response.State switch
                 {
@@ -38,6 +38,20 @@ namespace OAuthService.WebApi.Controllers
                     _ => NotFound()
                 };
             }
+        }
+
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<IActionResult> Authorization([FromQuery] AuthorizationRequest authorizationRequest)
+        {
+            var model = new UserAuthorizationRequest(authorizationRequest);
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Authorization([FromBody] UserAuthorizationRequest userAuthorizationRequest)
+        {
+            return Ok();
         }
     }
 }

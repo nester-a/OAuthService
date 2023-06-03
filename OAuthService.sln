@@ -21,7 +21,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.WebApi", "WebA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{548BD663-0D90-443E-A527-AE8BC57BE208}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthService.Data", "Data\OAuthService.Data\OAuthService.Data.csproj", "{17388CDC-0ED9-4678-847B-3CBD67B4B0A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Data", "Data\OAuthService.Data\OAuthService.Data.csproj", "{17388CDC-0ED9-4678-847B-3CBD67B4B0A9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthConstans", "..\OAuthConstans\OAuthConstans\OAuthConstans.csproj", "{C06B82F0-D24A-4FA0-B36C-937B061B27E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +51,10 @@ Global
 		{17388CDC-0ED9-4678-847B-3CBD67B4B0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17388CDC-0ED9-4678-847B-3CBD67B4B0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17388CDC-0ED9-4678-847B-3CBD67B4B0A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C06B82F0-D24A-4FA0-B36C-937B061B27E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C06B82F0-D24A-4FA0-B36C-937B061B27E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C06B82F0-D24A-4FA0-B36C-937B061B27E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C06B82F0-D24A-4FA0-B36C-937B061B27E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +65,7 @@ Global
 		{3FD435BD-AD36-4F41-98B4-F106CEFD66B7} = {6B4AFF00-D89F-4EA9-9B1C-32BC8C2A5258}
 		{87234B4E-E40C-436F-ACEF-80CD4D691EBE} = {F2A79737-F070-47AA-AF3A-6348C2824E7B}
 		{17388CDC-0ED9-4678-847B-3CBD67B4B0A9} = {548BD663-0D90-443E-A527-AE8BC57BE208}
+		{C06B82F0-D24A-4FA0-B36C-937B061B27E2} = {E34B1361-1097-4781-9F0D-81B700883CB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BFFB9E4-F81D-4E20-A671-0C8BDA8A2F74}

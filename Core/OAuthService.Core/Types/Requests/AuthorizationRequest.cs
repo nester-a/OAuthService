@@ -2,7 +2,7 @@
 
 namespace OAuthService.Core.Types.Requests
 {
-    public class AuthorizationRequest
+    public record AuthorizationRequest
     {
         [FromQuery(Name = "response_type")]
         public string ResponseType { get; set; } = string.Empty;
