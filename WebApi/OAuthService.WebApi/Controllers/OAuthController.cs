@@ -22,22 +22,20 @@ namespace OAuthService.WebApi.Controllers
 
         [HttpPost]
         [Route("[action]")]
-        public async Task<IActionResult> Token([FromForm]AccessTokenRequest accessTokenRequest)
+        public async Task<IActionResult> Token([FromForm]AccessTokenRequest accessTokenRequest, CancellationToken cancellationToken)
         {
-            using (var cancellationTokenSource = new CancellationTokenSource())
+            cancellationToken.ThrowIfCancellationRequested();
+
+            await validationService.ValidateAsync(accessTokenRequest, default);
+
+            var response = await responseFactory.CreateResponseAsync(accessTokenRequest, default);
+
+            return response.State switch
             {
-                var cancellationToken = cancellationTokenSource.Token;
-                await validationService.ValidateAsync(accessTokenRequest, cancellationToken);
-
-                var response = await responseFactory.CreateResponseAsync(accessTokenRequest, cancellationToken);
-
-                return response.State switch
-                {
-                    "success" => Ok(response),
-                    "error" => BadRequest(response),
-                    _ => NotFound()
-                };
-            }
+                "success" => Ok(response),
+                "error" => BadRequest(response),
+                _ => NotFound()
+            };
         }
 
         [HttpGet]
