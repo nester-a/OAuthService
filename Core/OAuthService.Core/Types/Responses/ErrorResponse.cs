@@ -17,7 +17,7 @@ namespace OAuthService.Core.Types.Responses
         public string? ErrorUri { get; set; }
 
         [JsonPropertyName(ErrorResponseParameter.State)]
-        public string State => "error";
+        public string? State { get; set; }
 
 
         public ErrorResponse(OAuthException exception)
@@ -25,5 +25,7 @@ namespace OAuthService.Core.Types.Responses
             Error = exception.Error;
             ErrorDescription = exception.ErrorDescription;
         }
+
+        public ErrorResponse() { }
     }
 }

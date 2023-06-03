@@ -23,6 +23,7 @@ namespace OAuthService.Services.DependencyInjection
             services.AddScoped<IRequestProcessor<IRefreshingAccessTokenRequest>, RefreshingAccessTokenRequestProcessor>();
             services.AddScoped<ITokenBuilder, TokenBuilder>();
             services.AddScoped<IAccessTokenResponseBuilder, AccessTokenResponseBuilder>();
+            services.AddScoped<IErrorResponseBuilder, ErrorResponseBuilder>();
             services.AddScoped<IPropsValidationService, PropsValidationService>();
             services.AddScoped<IValidationService, ValidationService>();
             services.AddScoped<IClientAuthenticationService, ClientAuthenticationService>();

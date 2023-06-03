@@ -1,6 +1,8 @@
-﻿namespace OAuthService.Interfaces.Builders
+﻿using OAuthService.Interfaces.Builders.Base;
+
+namespace OAuthService.Interfaces.Builders
 {
-    public interface ITokenBuilder
+    public interface ITokenBuilder : IBaseBuilder<string>
     {
         ITokenBuilder SignedWithKey(string key);
 
@@ -17,8 +19,6 @@
         ITokenBuilder AddIat(DateTime iat);
 
         ITokenBuilder AddJti(string jti);
-
-        string Build();
 
         Task<string> BuildAsync(CancellationToken cancellationToken = default);
     }

@@ -1,8 +1,9 @@
 ﻿using OAuthService.Core.Types.Responses;
+using OAuthService.Interfaces.Builders.Base;
 
 namespace OAuthService.Interfaces.Builders
 {
-    public interface IAccessTokenResponseBuilder
+    public interface IAccessTokenResponseBuilder : IBaseBuilder<AccessTokenResponse>
     {
         IAccessTokenResponseBuilder AddAccessToken(string accessToken);
 
@@ -11,7 +12,5 @@ namespace OAuthService.Interfaces.Builders
         IAccessTokenResponseBuilder AddExpiresIn(uint expiresIn);
 
         IAccessTokenResponseBuilder AddRefreshToken(string refreshToken);
-
-        AccessTokenResponse Build();
     }
 }

@@ -2,6 +2,6 @@
 {
     public interface IResponse
     {
-        string State { get; }
+        string? State { get; }
     }
 }
