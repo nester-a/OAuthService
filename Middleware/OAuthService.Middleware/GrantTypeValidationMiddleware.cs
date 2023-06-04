@@ -3,7 +3,7 @@ using OAuthConstans;
 using OAuthService.Core.Exceptions;
 using OAuthService.Interfaces.Validation;
 
-using static OAuthConstans.AccessTokenRequestParameters;
+using static OAuthConstans.AccessTokenRequestParameter;
 
 namespace OAuthService.Middleware
 {

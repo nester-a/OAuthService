@@ -9,7 +9,7 @@ namespace OAuthService.Data
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return new Client() { Id = "123", Secret = "123", TokenKey = "123" };
+            return new Client() { Id = "123", Secret = "123", TokenKey = "123", SupportedGrantTypes = new string[] { "password" } };
         }
     }
 }

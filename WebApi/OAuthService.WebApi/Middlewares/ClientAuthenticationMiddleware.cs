@@ -1,11 +1,7 @@
-using Newtonsoft.Json;
 using OAuthConstans;
-using static OAuthConstans.AccessTokenRequestParameters;
+using static OAuthConstans.AccessTokenRequestParameter;
 using OAuthService.Core.Exceptions;
-using OAuthService.Core.Exceptions.Base;
-using OAuthService.Core.Types.Responses;
 using OAuthService.Interfaces;
-using System.Net;
 
 namespace OAuthService.MVC
 {

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OAuthConstans;
+using OAuthService.Core.Enums;
 using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types;
-using OAuthService.Middleware.Enums;
 
 namespace OAuthService.Middleware
 {
@@ -26,7 +26,7 @@ namespace OAuthService.Middleware
 
             var form = context.Request.Form;
 
-            var allowed = client.SupportedGrantTypes.Contains(form[AccessTokenRequestParameters.GrantType].ToString());
+            var allowed = client.SupportedGrantTypes.Contains(form[AccessTokenRequestParameter.GrantType].ToString());
 
             if(!allowed)
             {

@@ -29,6 +29,10 @@ namespace OAuthService.Services.DependencyInjection
             services.AddScoped<IClientAuthenticationService, ClientAuthenticationService>();
             services.AddScoped<IClientAccessor, ClientAccessor>();
             services.AddScoped<IResponseFactory, ResponseFactory>();
+            
+            services.AddScoped<IAccessTokenResponseFactory, AccessTokenResponseFactory>();
+            services.AddScoped<IResponsePreparationService, ResponsePreparationService>();
+
             return services;
         }
     }

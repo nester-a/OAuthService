@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
 using OAuthConstans;
+using OAuthService.Core.Enums;
 using OAuthService.Core.Exceptions;
 using OAuthService.Interfaces.Storages;
-using OAuthService.Middleware.Enums;
 
 namespace OAuthService.Middleware
 {
@@ -32,7 +32,7 @@ namespace OAuthService.Middleware
             else
             {
                 var form = request.Form;
-                clientData = (form[AccessTokenRequestParameters.ClientId], form[AccessTokenRequestParameters.ClientSecret]);
+                clientData = (form[AccessTokenRequestParameter.ClientId], form[AccessTokenRequestParameter.ClientSecret]);
             }
 
             var client = await clientStorage.GetClientByIdAndNullableSecretAsync(clientData.clientId, clientData.clientSecret, context.RequestAborted);
