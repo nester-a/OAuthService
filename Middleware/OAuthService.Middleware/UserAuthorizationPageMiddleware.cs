@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OAuthService.Core.Exceptions;
 using OAuthService.Middleware.Options;
+using System.Net;
 
 namespace OAuthService.Middleware
 {
@@ -18,7 +20,18 @@ namespace OAuthService.Middleware
         {
             if (context.Request.Path == opt.uriPath)
             {
-                await context.Response.SendFileAsync(opt.pageFilePath, context.RequestAborted);
+                switch (context.Request.Method)
+                {
+                    case WebRequestMethods.Http.Get:
+                        await context.Response.SendFileAsync(opt.pageFilePath, context.RequestAborted);
+                        break;
+                   case WebRequestMethods.Http.Post:
+                        //<- здесь будет авторизация пользователя и выдача кода
+                        break;
+                    default:
+                        throw new ServerErrorException("Unsupported method for this endpoint");
+
+                }
             }
             else
             {

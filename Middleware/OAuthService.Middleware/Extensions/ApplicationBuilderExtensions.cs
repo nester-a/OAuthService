@@ -11,6 +11,7 @@ namespace OAuthService.Middleware.Extensions
             app.UseMiddleware<UserAuthorizationPageMiddleware>(userAuthorizationPageOptions);
             app.UseMiddleware<ClientAuthenticationMiddleware>();
             app.UseMiddleware<GrantTypeValidationMiddleware>();
+            app.UseMiddleware<ClientAuthorizationMiddleware>();
 
             return app;
         }
