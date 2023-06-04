@@ -1,8 +1,11 @@
 ﻿using System.Net;
+using System.Net.Http.Json;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
 using OAuthConstans;
 using OAuthService.Core.Exceptions.Base;
+using OAuthService.Core.Types.Responses;
 using OAuthService.Interfaces.Builders;
 
 namespace OAuthService.Middleware
@@ -24,23 +27,33 @@ namespace OAuthService.Middleware
             }
             catch (OAuthException ex)
             {
-                var response = errorResponseBuilder.FromException(ex)
-                                                   .Build();
+                var error = errorResponseBuilder.FromException(ex)
+                                                .Build();
 
-                var json = JsonConvert.SerializeObject(response);
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync(json);
+                await PrepareAndSendErrorResponse(context.Response,
+                                                  error,
+                                                  HttpStatusCode.BadRequest,
+                                                  context.RequestAborted);
             }
             catch (Exception ex)
             {
-                var response = errorResponseBuilder.AddErrorCode(ErrorResponseErrorCode.ServerError)
-                                                   .AddErrorDescription(ex.Message)
-                                                   .Build();
+                var error = errorResponseBuilder.AddErrorCode(ErrorResponseErrorCode.ServerError)
+                                                .AddErrorDescription(ex.Message)
+                                                .Build();
 
-                var json = JsonConvert.SerializeObject(response);
-                context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync(json);
+                await PrepareAndSendErrorResponse(context.Response,
+                                                  error,
+                                                  HttpStatusCode.InternalServerError,
+                                                  context.RequestAborted);
             }
+        }
+
+        private async Task PrepareAndSendErrorResponse(HttpResponse response, ErrorResponse error, HttpStatusCode requiredStatusCode, CancellationToken cancellationToken = default)
+        {
+            var json = JsonConvert.SerializeObject(error);
+            response.StatusCode = (int)requiredStatusCode;
+            response.ContentType = MediaTypeNames.Application.Json;
+            await response.WriteAsync(json, cancellationToken);
         }
     }
 }

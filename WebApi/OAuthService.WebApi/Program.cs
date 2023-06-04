@@ -1,7 +1,6 @@
 using OAuthService.Data.DependencyInjection;
 using OAuthService.MVC;
 using OAuthService.Services.DependencyInjection;
-using OAuthService.WebApi.Middlewares;
 using OAuthService.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +24,7 @@ if (app.Environment.IsDevelopment())
 }
 
 
-app.UseMiddleware<OAuthService.Middleware.OAuthErrorHandleMiddleware>();
+app.UseMiddleware<OAuthErrorHandleMiddleware>();
 app.UseMiddleware<ClientAuthenticationMiddleware>();
 
 app.UseRouting();

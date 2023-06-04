@@ -4,7 +4,7 @@
     {
         public string Error { get; private set; }
 
-        public string? ErrorDescription { get; set; }
+        public string? ErrorDescription { get; private set; }
 
         public OAuthException(string error, string? errorDescription)
             : base($"{error}-{errorDescription}")
