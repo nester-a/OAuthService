@@ -1,7 +1,7 @@
 using OAuthService.Data.DependencyInjection;
-using OAuthService.MVC;
 using OAuthService.Services.DependencyInjection;
-using OAuthService.Middleware;
+using OAuthService.WebApi;
+using OAuthService.Middleware.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,9 +23,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+string pagePath = Path.Combine(Environment.CurrentDirectory, "Pages", "Page.html");
 
-app.UseMiddleware<OAuthErrorHandleMiddleware>();
-app.UseMiddleware<ClientAuthenticationMiddleware>();
+app.UseOAuthService(new UserAuthorizationPageOptions("/authorization", pagePath));
 
 app.UseRouting();
 app.UseHttpsRedirection();
