@@ -3,6 +3,7 @@ using Microsoft.Net.Http.Headers;
 using OAuthConstans;
 using OAuthService.Core.Exceptions;
 using OAuthService.Interfaces.Storages;
+using OAuthService.Middleware.Enums;
 
 namespace OAuthService.Middleware
 {
@@ -40,6 +41,8 @@ namespace OAuthService.Middleware
             {
                 throw new InvalidClientException("Client authentication failed");
             }
+
+            context.Items.Add(ItemKey.Client, client);
 
             await next.Invoke(context);
         }
