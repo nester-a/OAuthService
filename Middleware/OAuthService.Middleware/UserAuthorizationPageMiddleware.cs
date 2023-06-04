@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using OAuthConstans;
 using OAuthService.Core.Exceptions;
 using OAuthService.Middleware.Options;
 using System.Net;
@@ -18,7 +19,7 @@ namespace OAuthService.Middleware
 
         public async Task InvokeAsync(HttpContext context)
         {
-            if (context.Request.Path == opt.uriPath)
+            if (context.Request.Path == ProtocolEndpoint.Authorization)
             {
                 switch (context.Request.Method)
                 {

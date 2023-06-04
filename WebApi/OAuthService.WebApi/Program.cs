@@ -1,6 +1,5 @@
 using OAuthService.Data.DependencyInjection;
 using OAuthService.Services.DependencyInjection;
-using OAuthService.WebApi;
 using OAuthService.Middleware.Options;
 using OAuthService.Middleware.Extensions;
 
@@ -26,7 +25,7 @@ if (app.Environment.IsDevelopment())
 
 string pagePath = Path.Combine(Environment.CurrentDirectory, "Pages", "Page.html");
 
-app.UseOAuthService(new UserAuthorizationPageOptions("/authorization", pagePath));
+app.UseOAuthService(new UserAuthorizationPageOptions(pagePath));
 
 app.UseRouting();
 app.UseHttpsRedirection();

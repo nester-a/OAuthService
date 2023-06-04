@@ -18,42 +18,46 @@ namespace OAuthService.Middleware
 
         public async Task InvokeAsync(HttpContext context, IValidationService validationService)
         {
-            var form = context.Request.Form;
-            var grantType = form[GrantType];
-
-            if(string.IsNullOrEmpty(grantType))
+            if(context.Request.Path == ProtocolEndpoint.Token)
             {
-                throw new InvalidRequestException("The request is missing a required parameter or has unnecessary parameter");
+                var form = context.Request.Form;
+                var grantType = form[GrantType];
+
+                if (string.IsNullOrEmpty(grantType))
+                {
+                    throw new InvalidRequestException("The request is missing a required parameter or has unnecessary parameter");
+                }
+
+                string[] shoulBeNotNullOrEmpty;
+                string[] shoulBeNullOrEmpty;
+
+                switch (grantType)
+                {
+                    case AccessTokenRequestGrantType.AuthorizationCode:
+                        shoulBeNotNullOrEmpty = new string[] { form[Code], form[RedirectUri], form[ClientId] };
+                        shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[RefreshToken] };
+                        break;
+                    case AccessTokenRequestGrantType.Password:
+                        shoulBeNotNullOrEmpty = new string[] { form[Username], form[Password] };
+                        shoulBeNullOrEmpty = new string[] { form[Code], form[RedirectUri], form[RefreshToken] };
+                        break;
+                    case AccessTokenRequestGrantType.ClientCredentials:
+                        shoulBeNotNullOrEmpty = Array.Empty<string>();
+                        shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[RefreshToken] };
+                        break;
+                    case AccessTokenRequestGrantType.RefreshToken:
+                        shoulBeNotNullOrEmpty = new string[] { form[RefreshToken] };
+                        shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[Code], form[RedirectUri] };
+                        break;
+                    default:
+                        throw new UnsupportedGrantTypeException("The authorization grant type is not supported by the authorization server.");
+                }
+
+                await ValidateGrantTypeAsync(shoulBeNotNullOrEmpty, shoulBeNullOrEmpty, context.RequestAborted);
             }
-
-            string[] shoulBeNotNullOrEmpty;
-            string[] shoulBeNullOrEmpty;
-
-            switch (grantType)
-            {
-                case AccessTokenRequestGrantType.AuthorizationCode:
-                    shoulBeNotNullOrEmpty = new string[] { form[Code], form[RedirectUri], form[ClientId] };
-                    shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[RefreshToken] };
-                    break;
-                case AccessTokenRequestGrantType.Password:
-                    shoulBeNotNullOrEmpty = new string[] { form[Username], form[Password] };
-                    shoulBeNullOrEmpty = new string[] { form[Code], form[RedirectUri], form[RefreshToken] };
-                    break;
-                case AccessTokenRequestGrantType.ClientCredentials:
-                    shoulBeNotNullOrEmpty = Array.Empty<string>();
-                    shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[RefreshToken] };
-                    break;
-                case AccessTokenRequestGrantType.RefreshToken:
-                    shoulBeNotNullOrEmpty = new string[] { form[RefreshToken] };
-                    shoulBeNullOrEmpty = new string[] { form[Username], form[Password], form[Scope], form[Code], form[RedirectUri] };
-                    break;
-                default:
-                    throw new UnsupportedGrantTypeException("The authorization grant type is not supported by the authorization server.");
-            }
-
-            await ValidateGrantTypeAsync(shoulBeNotNullOrEmpty, shoulBeNullOrEmpty, context.RequestAborted);
 
             await next.Invoke(context);
+
         }
 
         private async Task ValidateGrantTypeAsync(string?[] shoulBeNotNullOrEmpty, string?[] shouldBeNullOrEmpty, CancellationToken cancellationToken = default)

@@ -10,8 +10,8 @@ namespace OAuthService.Middleware.Extensions
             app.UseMiddleware<OAuthErrorHandleMiddleware>();
             app.UseMiddleware<UserAuthorizationPageMiddleware>(userAuthorizationPageOptions);
             app.UseMiddleware<ClientAuthenticationMiddleware>();
-            app.UseMiddleware<GrantTypeValidationMiddleware>();
             app.UseMiddleware<ClientAuthorizationMiddleware>();
+            app.UseMiddleware<GrantTypeValidationMiddleware>();
 
             return app;
         }
