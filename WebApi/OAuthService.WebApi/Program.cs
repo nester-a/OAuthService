@@ -2,6 +2,7 @@ using OAuthService.Data.DependencyInjection;
 using OAuthService.Services.DependencyInjection;
 using OAuthService.WebApi;
 using OAuthService.Middleware.Options;
+using OAuthService.Middleware.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

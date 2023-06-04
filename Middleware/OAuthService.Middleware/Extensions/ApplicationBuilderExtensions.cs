@@ -1,8 +1,7 @@
-﻿using OAuthService.Middleware;
+﻿using Microsoft.AspNetCore.Builder;
 using OAuthService.Middleware.Options;
-using OAuthService.MVC;
 
-namespace OAuthService.WebApi
+namespace OAuthService.Middleware.Extensions
 {
     public static class ApplicationBuilderExtensions
     {
