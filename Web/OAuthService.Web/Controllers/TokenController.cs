@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OAuthService.Web.Attributes;
 
 namespace OAuthService.Web.Controllers
 {
@@ -6,7 +7,7 @@ namespace OAuthService.Web.Controllers
     [Route("[controller]")]
     public class TokenController : ControllerBase
     {
-        
+        [ClientAuthenticated]
         [HttpPost]
         public async Task<IActionResult> Post()
         {
