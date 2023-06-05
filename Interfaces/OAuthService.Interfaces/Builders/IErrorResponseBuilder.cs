@@ -1,12 +1,6 @@
-﻿using OAuthService.Core.Base;
-using OAuthService.Core.Exceptions.Base;
-using OAuthService.Core.Types.Responses;
+﻿using OAuthService.Core.Types.Responses;
+using OAuthService.Exceptions.Base;
 using OAuthService.Interfaces.Builders.Base;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OAuthService.Interfaces.Builders
 {
@@ -20,6 +14,6 @@ namespace OAuthService.Interfaces.Builders
 
         IErrorResponseBuilder AddState(string state);
 
-        IErrorResponseBuilder FromException(OAuthException oAuthException);
+        IErrorResponseBuilder FromException(OAuthErrorException oAuthException);
     }
 }

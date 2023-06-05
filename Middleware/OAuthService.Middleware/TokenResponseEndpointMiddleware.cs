@@ -1,15 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OAuthConstans;
-using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
-using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types;
 using OAuthService.Core.Types.Responses;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces;
 using OAuthService.Interfaces.Facroies;
 using OAuthService.Interfaces.Storages;
 using System.Net;
-using System.Threading;
 
 namespace OAuthService.Middleware
 {

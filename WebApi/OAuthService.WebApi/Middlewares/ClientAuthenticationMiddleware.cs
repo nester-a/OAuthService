@@ -1,6 +1,6 @@
 using OAuthConstans;
 using static OAuthConstans.AccessTokenRequestParameter;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces;
 
 namespace OAuthService.MVC

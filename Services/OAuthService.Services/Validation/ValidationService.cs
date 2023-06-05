@@ -1,7 +1,8 @@
-﻿using static OAuthConstans.AccessTokenRequestGrantType;
-using OAuthService.Core.Exceptions;
-using OAuthService.Core.Types.Requests;
+﻿using OAuthService.Core.Types.Requests;
 using OAuthService.Interfaces.Validation;
+using OAuthService.Exceptions;
+
+using static OAuthConstans.AccessTokenRequestGrantType;
 
 namespace OAuthService.Services.Validation
 {

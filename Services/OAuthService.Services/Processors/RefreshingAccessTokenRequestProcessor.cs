@@ -1,6 +1,6 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;

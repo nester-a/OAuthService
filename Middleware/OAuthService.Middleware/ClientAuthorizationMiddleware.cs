@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OAuthConstans;
 using OAuthService.Core.Enums;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Core.Types;
 
 namespace OAuthService.Middleware

@@ -29,6 +29,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Middleware", "Middleware", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Middleware", "Middleware\OAuthService.Middleware\OAuthService.Middleware.csproj", "{6FA5CC87-B5D7-4EF1-8515-9C0E3CD09739}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Exceptions", "..\OAuthService.Exceptions\OAuthService.Exceptions\OAuthService.Exceptions.csproj", "{E4E5AF42-8C69-4485-88E3-BBCF80451FCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{6FA5CC87-B5D7-4EF1-8515-9C0E3CD09739}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FA5CC87-B5D7-4EF1-8515-9C0E3CD09739}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FA5CC87-B5D7-4EF1-8515-9C0E3CD09739}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4E5AF42-8C69-4485-88E3-BBCF80451FCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4E5AF42-8C69-4485-88E3-BBCF80451FCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4E5AF42-8C69-4485-88E3-BBCF80451FCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4E5AF42-8C69-4485-88E3-BBCF80451FCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,6 +81,7 @@ Global
 		{17388CDC-0ED9-4678-847B-3CBD67B4B0A9} = {548BD663-0D90-443E-A527-AE8BC57BE208}
 		{C06B82F0-D24A-4FA0-B36C-937B061B27E2} = {E34B1361-1097-4781-9F0D-81B700883CB5}
 		{6FA5CC87-B5D7-4EF1-8515-9C0E3CD09739} = {E024AFA0-C19E-4136-A4AC-77BB07814E27}
+		{E4E5AF42-8C69-4485-88E3-BBCF80451FCB} = {E34B1361-1097-4781-9F0D-81B700883CB5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BFFB9E4-F81D-4E20-A671-0C8BDA8A2F74}

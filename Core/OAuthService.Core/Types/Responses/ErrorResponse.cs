@@ -1,7 +1,7 @@
 ﻿using OAuthService.Core.Base;
 using OAuthConstans;
-using OAuthService.Core.Exceptions.Base;
 using System.Text.Json.Serialization;
+using OAuthService.Exceptions.Base;
 
 namespace OAuthService.Core.Types.Responses
 {
@@ -20,9 +20,9 @@ namespace OAuthService.Core.Types.Responses
         public string? State { get; set; }
 
 
-        public ErrorResponse(OAuthException exception)
+        public ErrorResponse(OAuthErrorException exception)
         {
-            Error = exception.Error;
+            Error = exception.ErrorCode;
             ErrorDescription = exception.ErrorDescription;
         }
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces;
 using OAuthService.Interfaces.Accessors;
 

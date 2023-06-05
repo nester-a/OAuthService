@@ -1,13 +1,11 @@
 ﻿using OAuthService.Core.Base;
-using OAuthService.Core.Exceptions;
 using OAuthService.Interfaces.Storages;
-using OAuthService.Core.Exceptions.Base;
-using OAuthService.Core.Types.Responses;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Services.Processors.Base;
 using OAuthService.Core.Enums;
+using OAuthService.Exceptions;
 
 namespace OAuthService.Services.Processors
 {
@@ -29,21 +27,14 @@ namespace OAuthService.Services.Processors
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            try
-            {
-                var userId = await codeStorage.GetUserIdByCodeAndClientIdAsync(request.Code!, request.ClientId!, cancellationToken);
+            var userId = await codeStorage.GetUserIdByCodeAndClientIdAsync(request.Code!, request.ClientId!, cancellationToken);
 
-                if (string.IsNullOrWhiteSpace(userId))
-                {
-                    throw new InvalidGrantException(nameof(request.Code));
-                }
-
-                return await BuildResponseAsync(userId, TokenSubject.User, true, cancellationToken);
-            }
-            catch (OAuthException ex)
+            if (string.IsNullOrWhiteSpace(userId))
             {
-                return new ErrorResponse(ex);
+                throw new InvalidGrantException(nameof(request.Code));
             }
+
+            return await BuildResponseAsync(userId, TokenSubject.User, true, cancellationToken);
         }
     }
 }

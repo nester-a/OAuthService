@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\OAuthConstans\OAuthConstans\OAuthConstans.csproj" />
+    <ProjectReference Include="..\..\..\OAuthService.Exceptions\OAuthService.Exceptions\OAuthService.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>

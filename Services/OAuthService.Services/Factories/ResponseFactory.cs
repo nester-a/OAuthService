@@ -1,9 +1,10 @@
 ﻿using OAuthService.Core.Base;
-using static OAuthConstans.AccessTokenRequestGrantType;
-using OAuthService.Core.Exceptions;
 using OAuthService.Core.Types.Requests;
 using OAuthService.Interfaces.Facroies;
 using OAuthService.Interfaces.Processors;
+using OAuthService.Exceptions;
+
+using static OAuthConstans.AccessTokenRequestGrantType;
 
 namespace OAuthService.Services.Factories
 {

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using OAuthConstans;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces.Validation;
 
 using static OAuthConstans.AccessTokenRequestParameter;

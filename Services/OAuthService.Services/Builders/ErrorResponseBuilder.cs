@@ -1,5 +1,5 @@
-﻿using OAuthService.Core.Exceptions.Base;
-using OAuthService.Core.Types.Responses;
+﻿using OAuthService.Core.Types.Responses;
+using OAuthService.Exceptions.Base;
 using OAuthService.Interfaces.Builders;
 
 namespace OAuthService.Services.Builders
@@ -31,7 +31,7 @@ namespace OAuthService.Services.Builders
             return this;
         }
 
-        public IErrorResponseBuilder FromException(OAuthException oAuthException)
+        public IErrorResponseBuilder FromException(OAuthErrorException oAuthException)
         {
             response = new(oAuthException);
             return this;

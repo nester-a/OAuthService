@@ -2,7 +2,7 @@
 using Microsoft.Net.Http.Headers;
 using OAuthConstans;
 using OAuthService.Core.Enums;
-using OAuthService.Core.Exceptions;
+using OAuthService.Exceptions;
 using OAuthService.Interfaces.Storages;
 
 namespace OAuthService.Middleware

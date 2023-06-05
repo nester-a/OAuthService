@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using OAuthService.Core.Enums;
-using OAuthService.Core.Exceptions;
+﻿using OAuthService.Core.Enums;
 using OAuthService.Core.Extensions;
 using OAuthService.Core.Types;
 using OAuthService.Core.Types.Responses;

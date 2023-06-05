@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using Microsoft.AspNetCore.Http;
 using OAuthConstans;
-using OAuthService.Core.Exceptions.Base;
+using OAuthService.Exceptions.Base;
 using OAuthService.Interfaces;
 using OAuthService.Interfaces.Builders;
 
@@ -22,14 +22,14 @@ namespace OAuthService.Middleware
             {
                 await next.Invoke(context);
             }
-            catch (OAuthException ex)
+            catch (OAuthErrorException ex)
             {
                 var error = errorResponseBuilder.FromException(ex)
                                                 .Build();
 
                 await responsePreparationService.PrepareAndSendResponse(context.Response,
                                                                         error,
-                                                                        HttpStatusCode.BadRequest,
+                                                                        ex.AssociatedStatusCode,
                                                                         context.RequestAborted);
             }
             catch (Exception ex)
