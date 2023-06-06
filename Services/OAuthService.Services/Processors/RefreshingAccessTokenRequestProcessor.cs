@@ -1,6 +1,7 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Core.Types;
+using OAuthService.Core.Types.Responses;
 using OAuthService.Exceptions;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
@@ -21,7 +22,7 @@ namespace OAuthService.Services.Processors
             this.tokenStorage = tokenStorage;
         }
 
-        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IRefreshingAccessTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<AccessTokenResponse> ProcessToResponseAsync(Client responseAud, IRefreshingAccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

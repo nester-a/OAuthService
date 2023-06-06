@@ -6,6 +6,7 @@ using OAuthService.Services.Processors.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Exceptions;
 using OAuthService.Core.Types;
+using OAuthService.Core.Types.Responses;
 
 namespace OAuthService.Services.Processors
 {
@@ -22,7 +23,7 @@ namespace OAuthService.Services.Processors
             this.userStorage = userStorage;
         }
 
-        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IPasswordGrantTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<AccessTokenResponse> ProcessToResponseAsync(Client responseAud, IPasswordGrantTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

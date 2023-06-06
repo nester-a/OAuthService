@@ -1,23 +1,20 @@
-﻿using OAuthService.Core.Base;
+﻿using OAuthConstans;
 using System.Text.Json.Serialization;
 
 namespace OAuthService.Core.Types.Responses
 {
-    public class AccessTokenResponse : IResponse
+    public class AccessTokenResponse
     {
-        [JsonPropertyName("access_token")]
+        [JsonPropertyName(AccessTokenResponseParameter.AccessToken)]
         public string AccessToken { get; set; } = string.Empty;
 
-        [JsonPropertyName("token_type")]
+        [JsonPropertyName(AccessTokenResponseParameter.TokenType)]
         public string TokenType { get; set; } = string.Empty;
 
-        [JsonPropertyName("expires_in")]
+        [JsonPropertyName(AccessTokenResponseParameter.ExpiresIn)]
         public uint ExpiresIn { get; set; }
 
-        [JsonPropertyName("refresh_token")]
+        [JsonPropertyName(AccessTokenResponseParameter.RefreshToken)]
         public string? RefreshToken { get; set; }
-
-        [JsonIgnore]
-        public string State => "success";
     }
 }

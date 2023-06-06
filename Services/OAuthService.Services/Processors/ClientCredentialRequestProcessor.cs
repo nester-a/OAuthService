@@ -1,6 +1,7 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Core.Types;
+using OAuthService.Core.Types.Responses;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Interfaces.Storages;
@@ -15,7 +16,7 @@ namespace OAuthService.Services.Processors
                                                 IAccessTokenResponseBuilder accessTokenResponseBuilder)
                                                 : base(tokenBuilder, tokenStorage, accessTokenResponseBuilder) { }
 
-        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IClientCredentialTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<AccessTokenResponse> ProcessToResponseAsync(Client responseAud, IClientCredentialTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

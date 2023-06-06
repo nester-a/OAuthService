@@ -6,10 +6,11 @@ using OAuthService.Exceptions;
 
 using static OAuthConstans.AccessTokenRequestGrantType;
 using OAuthService.Core.Types;
+using OAuthService.Core.Types.Responses;
 
 namespace OAuthService.Services.Factories
 {
-    public class ResponseFactory : IResponseFactory
+    public class ResponseFactory : IRequestResponseFactory
     {
         private readonly IRequestProcessor<ICodeGrantTokenRequest> codeRequestProcessor;
         private readonly IRequestProcessor<IPasswordGrantTokenRequest> passwordRequestProcessor;
@@ -26,7 +27,7 @@ namespace OAuthService.Services.Factories
             this.clientCredentialRequestProcessor = clientCredentialRequestProcessor;
             this.refreshingAccessRequest = refreshingAccessRequest;
         }
-        public async Task<IResponse> CreateResponseAsync(Client responseAud, AccessTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<AccessTokenResponse> CreateResponseAsync(Client responseAud, AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

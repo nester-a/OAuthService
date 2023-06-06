@@ -1,11 +1,10 @@
-﻿using OAuthService.Core.Base;
-using OAuthConstans;
+﻿using OAuthConstans;
 using System.Text.Json.Serialization;
 using OAuthService.Exceptions.Base;
 
 namespace OAuthService.Core.Types.Responses
 {
-    public class ErrorResponse : IResponse
+    public class ErrorResponse
     {
         [JsonPropertyName(ErrorResponseParameter.Error)]
         public string Error { get; set; } = string.Empty;

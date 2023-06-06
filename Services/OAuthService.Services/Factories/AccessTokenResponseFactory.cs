@@ -1,4 +1,5 @@
-﻿using OAuthService.Core.Enums;
+﻿using OAuthConstans;
+using OAuthService.Core.Enums;
 using OAuthService.Core.Extensions;
 using OAuthService.Core.Types;
 using OAuthService.Core.Types.Responses;
@@ -46,7 +47,7 @@ namespace OAuthService.Services.Factories
             }
 
             accessTokenResponseBuilder.AddAccessToken(token)
-                                      .AddTokenType("Bearer")
+                                      .AddTokenType(AccessTokenType.Bearer)
                                       .AddExpiresIn(exp.ToUnixTimestamp());
 
             if (refreshTokenRequired)

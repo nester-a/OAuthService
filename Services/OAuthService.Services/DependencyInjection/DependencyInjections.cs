@@ -25,7 +25,7 @@ namespace OAuthService.Services.DependencyInjection
             services.AddScoped<IErrorResponseBuilder, ErrorResponseBuilder>();
             services.AddScoped<IPropsValidationService, PropsValidationService>();
             services.AddScoped<IValidationService, ValidationService>();
-            services.AddScoped<IResponseFactory, ResponseFactory>();
+            services.AddScoped<IRequestResponseFactory, ResponseFactory>();
             
             services.AddScoped<IAccessTokenResponseFactory, AccessTokenResponseFactory>();
             services.AddScoped<IResponsePreparationService, ResponsePreparationService>();

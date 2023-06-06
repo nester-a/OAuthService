@@ -15,11 +15,11 @@ namespace OAuthService.Web.Controllers
     {
         private readonly IClientAuthorizationService clientAuthorizationService;
         private readonly IValidationService requestValidationService;
-        private readonly IResponseFactory responseFactory;
+        private readonly IRequestResponseFactory responseFactory;
 
         public TokenController(IClientAuthorizationService clientAuthorizationService, 
                                IValidationService requestValidationService,
-                               IResponseFactory responseFactory)
+                               IRequestResponseFactory responseFactory)
         {
             this.clientAuthorizationService = clientAuthorizationService;
             this.requestValidationService = requestValidationService;

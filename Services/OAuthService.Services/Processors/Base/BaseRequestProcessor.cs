@@ -2,6 +2,7 @@
 using OAuthService.Core.Enums;
 using OAuthService.Core.Extensions;
 using OAuthService.Core.Types;
+using OAuthService.Core.Types.Responses;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Storages;
 
@@ -21,7 +22,7 @@ namespace OAuthService.Services.Processors.Base
             this.tokenStorage = tokenStorage;
             this.accessTokenResponseBuilder = accessTokenResponseBuilder;
         }
-        protected async Task<IResponse> BuildResponseAsync(Client responseAud, string responseTokenSub, TokenSubject tokenSubjectType, bool refreshTokenRequired, CancellationToken cancellationToken = default)
+        protected async Task<AccessTokenResponse> BuildResponseAsync(Client responseAud, string responseTokenSub, TokenSubject tokenSubjectType, bool refreshTokenRequired, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 

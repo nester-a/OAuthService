@@ -40,7 +40,7 @@ namespace OAuthService.Web.DependencyInjection
             services.AddScoped<IRequestProcessor<IClientCredentialTokenRequest>, ClientCredentialRequestProcessor>();
             services.AddScoped<IRequestProcessor<IRefreshingAccessTokenRequest>, RefreshingAccessTokenRequestProcessor>();
 
-            services.AddScoped<IResponseFactory, ResponseFactory>();
+            services.AddScoped<IRequestResponseFactory, ResponseFactory>();
 
             return services;
         }
