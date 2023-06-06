@@ -68,7 +68,7 @@ namespace OAuthService.Services.Validation
             cancellationToken.ThrowIfCancellationRequested();
 
             string?[] shoulBeNotNullOrEmpty = new string?[] { request.Username, request.Password };
-            string?[] shoulBeNullOrEmpty = new string?[] { request.Code, request.RedirectUri, request.ClientId, request.RefreshToken };
+            string?[] shoulBeNullOrEmpty = new string?[] { request.Code, request.RedirectUri, request.RefreshToken };
 
             try
             {
@@ -84,7 +84,7 @@ namespace OAuthService.Services.Validation
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            string?[] shoulBeNullOrEmpty = new string?[] { request.Username, request.Password, request.Code, request.RedirectUri, request.ClientId, request.RefreshToken };
+            string?[] shoulBeNullOrEmpty = new string?[] { request.Username, request.Password, request.Code, request.RedirectUri, request.ClientId, request.ClientSecret, request.RefreshToken };
 
             try
             {
@@ -101,7 +101,7 @@ namespace OAuthService.Services.Validation
             cancellationToken.ThrowIfCancellationRequested();
 
             string?[] shoulBeNotNullOrEmpty = new string?[] { request.RefreshToken };
-            string?[] shoulBeNullOrEmpty = new string?[] { request.Username, request.Password, request.Code, request.RedirectUri, request.ClientId };
+            string?[] shoulBeNullOrEmpty = new string?[] { request.Username, request.Password, request.Code, request.RedirectUri };
 
             try
             {

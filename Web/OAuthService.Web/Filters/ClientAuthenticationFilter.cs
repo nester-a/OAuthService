@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using OAuthService.Core.Enums;
 using OAuthService.Core.Types;
 using OAuthService.Exceptions;
+using OAuthService.Web.Common;
 
 namespace OAuthService.Web.Filters
 {
@@ -11,7 +11,7 @@ namespace OAuthService.Web.Filters
         {
             if (context.HttpContext.Items[ItemKey.Client] is not Client)
             {
-                throw new InvalidClientException("Client is not authenticated");
+                throw new InvalidClientException("Client is not authenticated for use this endpoint");
             }
         }
     }

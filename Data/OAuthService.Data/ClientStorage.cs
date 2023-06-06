@@ -1,4 +1,5 @@
-﻿using OAuthService.Core.Types;
+﻿using OAuthConstans;
+using OAuthService.Core.Types;
 using OAuthService.Interfaces.Storages;
 
 namespace OAuthService.Data
@@ -9,7 +10,12 @@ namespace OAuthService.Data
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            return new Client() { Id = "123", Secret = "123", TokenKey = "123", SupportedGrantTypes = new string[] { "password" } };
+            return new Client() { Id = "123", Secret = "123", SupportedGrantTypes = new string[] { AccessTokenRequestGrantType.AuthorizationCode, 
+                                                                                                   AccessTokenRequestGrantType.Password, 
+                                                                                                   AccessTokenRequestGrantType.ClientCredentials, 
+                                                                                                   AccessTokenRequestGrantType.RefreshToken 
+                                                                                                 } 
+            };
         }
     }
 }

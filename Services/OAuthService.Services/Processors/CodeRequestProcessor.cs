@@ -1,11 +1,11 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Interfaces.Storages;
 using OAuthService.Interfaces.Builders;
-using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Services.Processors.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Exceptions;
+using OAuthService.Core.Types;
 
 namespace OAuthService.Services.Processors
 {
@@ -13,17 +13,16 @@ namespace OAuthService.Services.Processors
     {
         private readonly ICodeStorage codeStorage;
 
-        public CodeRequestProcessor(
-            IClientAccessor clientAccessor,
-            ICodeStorage codeStorage, 
-            ITokenBuilder tokenBuilder, 
-            ITokenStorage tokenStorage,
-            IAccessTokenResponseBuilder accessTokenResponseBuilder) : base(clientAccessor, tokenBuilder, tokenStorage, accessTokenResponseBuilder)
+        public CodeRequestProcessor(ICodeStorage codeStorage, 
+                                    ITokenBuilder tokenBuilder, 
+                                    ITokenStorage tokenStorage,
+                                    IAccessTokenResponseBuilder accessTokenResponseBuilder) 
+                                    : base(tokenBuilder, tokenStorage, accessTokenResponseBuilder)
         {
             this.codeStorage = codeStorage;
         }
 
-        public async Task<IResponse> ProcessToResponseAsync(ICodeGrantTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, ICodeGrantTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -34,7 +33,7 @@ namespace OAuthService.Services.Processors
                 throw new InvalidGrantException(nameof(request.Code));
             }
 
-            return await BuildResponseAsync(userId, TokenSubject.User, true, cancellationToken);
+            return await BuildResponseAsync(responseAud, userId, TokenSubject.User, true, cancellationToken);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
+using OAuthService.Core.Types;
 using OAuthService.Exceptions;
-using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Interfaces.Storages;
@@ -13,15 +13,15 @@ namespace OAuthService.Services.Processors
     {
         private readonly ITokenStorage tokenStorage;
 
-        public RefreshingAccessTokenRequestProcessor(IClientAccessor clientAccessor, 
-            ITokenBuilder tokenBuilder, 
-            ITokenStorage tokenStorage, 
-            IAccessTokenResponseBuilder accessTokenResponseBuilder) : base(clientAccessor, tokenBuilder, tokenStorage, accessTokenResponseBuilder)
+        public RefreshingAccessTokenRequestProcessor(ITokenBuilder tokenBuilder, 
+                                                     ITokenStorage tokenStorage, 
+                                                     IAccessTokenResponseBuilder accessTokenResponseBuilder) 
+                                                     : base(tokenBuilder, tokenStorage, accessTokenResponseBuilder)
         {
             this.tokenStorage = tokenStorage;
         }
 
-        public async Task<IResponse> ProcessToResponseAsync(IRefreshingAccessTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IRefreshingAccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -32,7 +32,7 @@ namespace OAuthService.Services.Processors
                 throw new InvalidGrantException(nameof(request.RefreshToken));
             }
 
-            return await BuildResponseAsync(subj, TokenSubject.User, true, cancellationToken);
+            return await BuildResponseAsync(responseAud, subj, TokenSubject.User, true, cancellationToken);
         }
     }
 }

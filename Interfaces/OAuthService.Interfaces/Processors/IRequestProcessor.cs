@@ -1,10 +1,10 @@
 ﻿using OAuthService.Core.Base;
-using OAuthService.Core.Types.Requests;
+using OAuthService.Core.Types;
 
 namespace OAuthService.Interfaces.Processors
 {
     public interface IRequestProcessor<in T> where T : IRequest
     {
-        Task<IResponse> ProcessToResponseAsync(T request, CancellationToken cancellationToken = default);
+        Task<IResponse> ProcessToResponseAsync(Client responseAud, T request, CancellationToken cancellationToken = default);
     }
 }

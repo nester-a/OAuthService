@@ -1,7 +1,7 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Core.Extensions;
-using OAuthService.Interfaces.Accessors;
+using OAuthService.Core.Types;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Storages;
 
@@ -9,36 +9,33 @@ namespace OAuthService.Services.Processors.Base
 {
     public abstract class BaseRequestProcessor
     {
-        private readonly IClientAccessor clientAccessor;
         private readonly ITokenBuilder tokenBuilder;
         private readonly ITokenStorage tokenStorage;
         private readonly IAccessTokenResponseBuilder accessTokenResponseBuilder;
 
-        public BaseRequestProcessor(IClientAccessor clientAccessor, 
-            ITokenBuilder tokenBuilder, 
-            ITokenStorage tokenStorage,
-            IAccessTokenResponseBuilder accessTokenResponseBuilder)
+        public BaseRequestProcessor(ITokenBuilder tokenBuilder, 
+                                    ITokenStorage tokenStorage,
+                                    IAccessTokenResponseBuilder accessTokenResponseBuilder)
         {
-            this.clientAccessor = clientAccessor;
             this.tokenBuilder = tokenBuilder;
             this.tokenStorage = tokenStorage;
             this.accessTokenResponseBuilder = accessTokenResponseBuilder;
         }
-        protected async Task<IResponse> BuildResponseAsync(string responseTokenSub, TokenSubject tokenSubjectType, bool refreshTokenRequired, CancellationToken cancellationToken = default)
+        protected async Task<IResponse> BuildResponseAsync(Client responseAud, string responseTokenSub, TokenSubject tokenSubjectType, bool refreshTokenRequired, CancellationToken cancellationToken = default)
         {
-            var client = clientAccessor.Client;
+            cancellationToken.ThrowIfCancellationRequested();
 
             var now = DateTime.UtcNow;
             var exp = now.AddDays(1);
             var jti = Guid.NewGuid().ToString();
-            var key = client!.TokenKey;
+            var key = responseAud.TokenKey;
 
             var token = await tokenBuilder.SignedWithKey(key)
                                           .AddIat(now)
                                           .AddNbf(now)
                                           .AddExp(exp)
                                           .AddJti(jti)
-                                          .AddAud(client.Id)
+                                          .AddAud(responseAud.Id)
                                           .AddSub(responseTokenSub)
                                           .BuildAsync(cancellationToken);
 

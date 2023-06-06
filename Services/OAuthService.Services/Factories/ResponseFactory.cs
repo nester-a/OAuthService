@@ -5,6 +5,7 @@ using OAuthService.Interfaces.Processors;
 using OAuthService.Exceptions;
 
 using static OAuthConstans.AccessTokenRequestGrantType;
+using OAuthService.Core.Types;
 
 namespace OAuthService.Services.Factories
 {
@@ -25,17 +26,17 @@ namespace OAuthService.Services.Factories
             this.clientCredentialRequestProcessor = clientCredentialRequestProcessor;
             this.refreshingAccessRequest = refreshingAccessRequest;
         }
-        public async Task<IResponse> CreateResponseAsync(AccessTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<IResponse> CreateResponseAsync(Client responseAud, AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
             return request.GrantType switch
             {
-                AuthorizationCode => await codeRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                Password => await passwordRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                ClientCredentials => await clientCredentialRequestProcessor.ProcessToResponseAsync(request, cancellationToken),
-                RefreshToken => await refreshingAccessRequest.ProcessToResponseAsync(request, cancellationToken),
-                _ => throw new ServerErrorException("Smth wrong")
+                AuthorizationCode => await codeRequestProcessor.ProcessToResponseAsync(responseAud, request, cancellationToken),
+                Password => await passwordRequestProcessor.ProcessToResponseAsync(responseAud, request, cancellationToken),
+                ClientCredentials => await clientCredentialRequestProcessor.ProcessToResponseAsync(responseAud, request, cancellationToken),
+                RefreshToken => await refreshingAccessRequest.ProcessToResponseAsync(responseAud, request, cancellationToken),
+                _ => throw new ServerErrorException(nameof(request.GrantType))
             };
         }
     }

@@ -1,11 +1,11 @@
 ﻿using OAuthService.Core.Base;
-using OAuthService.Interfaces.Accessors;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Interfaces.Storages;
 using OAuthService.Services.Processors.Base;
 using OAuthService.Core.Enums;
 using OAuthService.Exceptions;
+using OAuthService.Core.Types;
 
 namespace OAuthService.Services.Processors
 {
@@ -14,15 +14,15 @@ namespace OAuthService.Services.Processors
         private readonly IUserStorage userStorage;
 
         public PasswordRequestProcessor(IUserStorage userStorage,
-            IClientAccessor clientAccessor, 
-            ITokenBuilder tokenBuilder, 
-            ITokenStorage tokenStorage, 
-            IAccessTokenResponseBuilder accessTokenResponseBuilder) : base(clientAccessor, tokenBuilder, tokenStorage, accessTokenResponseBuilder)
+                                        ITokenBuilder tokenBuilder, 
+                                        ITokenStorage tokenStorage, 
+                                        IAccessTokenResponseBuilder accessTokenResponseBuilder) 
+                                        : base(tokenBuilder, tokenStorage, accessTokenResponseBuilder)
         {
             this.userStorage = userStorage;
         }
 
-        public async Task<IResponse> ProcessToResponseAsync(IPasswordGrantTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IPasswordGrantTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
@@ -35,7 +35,7 @@ namespace OAuthService.Services.Processors
                 throw new InvalidGrantException(nameof(id));
             }
 
-            return await BuildResponseAsync(id, TokenSubject.User, true, cancellationToken);
+            return await BuildResponseAsync(responseAud, id, TokenSubject.User, true, cancellationToken);
         }
     }
 }

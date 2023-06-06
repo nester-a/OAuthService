@@ -17,6 +17,9 @@ namespace OAuthService.Core.Types.Requests
         [FromForm(Name = "client_id")]
         public string? ClientId { get; set;  }
 
+        [FromForm(Name = "client_secret")]
+        public string? ClientSecret { get; set; }
+
         [FromForm(Name = "username")]
         public string? Username { get; set;  }
 

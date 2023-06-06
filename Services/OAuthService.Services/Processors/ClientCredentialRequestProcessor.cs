@@ -1,6 +1,6 @@
 ﻿using OAuthService.Core.Base;
 using OAuthService.Core.Enums;
-using OAuthService.Interfaces.Accessors;
+using OAuthService.Core.Types;
 using OAuthService.Interfaces.Builders;
 using OAuthService.Interfaces.Processors;
 using OAuthService.Interfaces.Storages;
@@ -10,24 +10,16 @@ namespace OAuthService.Services.Processors
 {
     public class ClientCredentialRequestProcessor : BaseRequestProcessor, IRequestProcessor<IClientCredentialTokenRequest>
     {
-        private readonly IClientAccessor clientAccessor;
+        public ClientCredentialRequestProcessor(ITokenBuilder tokenBuilder,
+                                                ITokenStorage tokenStorage,
+                                                IAccessTokenResponseBuilder accessTokenResponseBuilder)
+                                                : base(tokenBuilder, tokenStorage, accessTokenResponseBuilder) { }
 
-        public ClientCredentialRequestProcessor(IClientAccessor clientAccessor,
-            ITokenBuilder tokenBuilder,
-            ITokenStorage tokenStorage,
-            IAccessTokenResponseBuilder accessTokenResponseBuilder)
-            : base(clientAccessor, tokenBuilder, tokenStorage, accessTokenResponseBuilder)
-        {
-            this.clientAccessor = clientAccessor;
-        }
-
-        public async Task<IResponse> ProcessToResponseAsync(IClientCredentialTokenRequest request, CancellationToken cancellationToken = default)
+        public async Task<IResponse> ProcessToResponseAsync(Client responseAud, IClientCredentialTokenRequest request, CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var sub = clientAccessor.Client!.Id;
-
-            return await BuildResponseAsync(sub, TokenSubject.Client, false, cancellationToken);
+            return await BuildResponseAsync(responseAud, responseAud.Id, TokenSubject.Client, false, cancellationToken);
         }
     }
 }
