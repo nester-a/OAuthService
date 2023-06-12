@@ -18,5 +18,10 @@ namespace OAuthService.Data
 
             return "123";
         }
+
+        public async Task RevokeTokenAsync(string tokenValue, TokenType tokenType, CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
+        }
     }
 }
