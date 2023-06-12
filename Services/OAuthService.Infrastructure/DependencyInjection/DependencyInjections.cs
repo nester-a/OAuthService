@@ -18,6 +18,9 @@ namespace OAuthService.Infrastructure.DependencyInjection
             services.AddScoped<AccessTokenResponseBuilderFactory>();
             services.AddScoped<ErrorResponseBuilderFactory>();
             services.AddScoped<JwtBuilderFactory>();
+
+            services.AddScoped<IAuthorizationResponseFactory, AuthorizationResponseFactory>();
+            services.AddScoped<AuthorizationResponseBuilderFactory>();
             return services;
         }
     }

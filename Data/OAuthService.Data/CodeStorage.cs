@@ -1,4 +1,5 @@
 ﻿using OAuthService.Data.Abstraction;
+using System.Threading;
 
 namespace OAuthService.Data
 {
@@ -9,6 +10,11 @@ namespace OAuthService.Data
             cancellationToken.ThrowIfCancellationRequested();
 
             return "123";
+        }
+
+        public async Task SaveCodeAsync(string code, DateTime valiTillUtc, string userId, string clientId, CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
         }
     }
 }
