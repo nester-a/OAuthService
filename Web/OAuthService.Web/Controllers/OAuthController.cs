@@ -1,6 +1,7 @@
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using OAuthService.Core.Types;
 using OAuthService.Core.Types.Requests;
+using OAuthService.Core.Types;
 using OAuthService.Interfaces.Authorization;
 using OAuthService.Interfaces.Facroies;
 using OAuthService.Interfaces.Validation;
@@ -10,14 +11,13 @@ using OAuthService.Web.Common;
 namespace OAuthService.Web.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
-    public class TokenController : ControllerBase
+    public class OAuthController : ControllerBase
     {
         private readonly IClientAuthorizationService clientAuthorizationService;
         private readonly IValidationService requestValidationService;
         private readonly IRequestResponseFactory responseFactory;
 
-        public TokenController(IClientAuthorizationService clientAuthorizationService, 
+        public OAuthController(IClientAuthorizationService clientAuthorizationService,
                                IValidationService requestValidationService,
                                IRequestResponseFactory responseFactory)
         {
@@ -27,8 +27,8 @@ namespace OAuthService.Web.Controllers
         }
 
         [ClientAuthenticated]
-        [HttpPost]
-        public async Task<IActionResult> Post([FromForm] AccessTokenRequest request, CancellationToken cancellationToken = default)
+        [HttpPost("/token")]
+        public async Task<IActionResult> Token([FromForm] AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
             var client = HttpContext.Items[ItemKey.Client] as Client;
 
@@ -39,6 +39,13 @@ namespace OAuthService.Web.Controllers
             var response = await responseFactory.CreateResponseAsync(client!, request, cancellationToken);
 
             return Ok(response);
+        }
+
+        [ClientAuthenticated]
+        [HttpPost("/revoke")]
+        public async Task<IActionResult> Revoke()
+        {
+            return Ok("Revoke");
         }
     }
 }
