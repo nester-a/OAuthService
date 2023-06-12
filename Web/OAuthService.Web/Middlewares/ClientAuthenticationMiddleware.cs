@@ -18,33 +18,41 @@ namespace OAuthService.Web.Middlewares
         public async Task InvokeAsync(HttpContext context, IClientStorage clientStorage)
         {
             var request = context.Request;
-            var headers = request.Headers;
 
-            var basics = headers[HeaderNames.Authorization].ToString();
-
-            (string? clientId, string? clientSecret) clientData;
-
-            if (!string.IsNullOrWhiteSpace(basics))
+            if(request.Path == "/authorization")
             {
-                clientData = await GetClientDataFromBasics(basics, context.RequestAborted);
+                await next.Invoke(context);
             }
             else
             {
-                var form = request.Form;
-                clientData = (form[AccessTokenRequestParameter.ClientId], form[AccessTokenRequestParameter.ClientSecret]);
-            }
+                var headers = request.Headers;
 
-            if(!string.IsNullOrEmpty(clientData.clientId))
-            {
-                var client = await clientStorage.GetClientByIdAndNullableSecretAsync(clientData.clientId, clientData.clientSecret, context.RequestAborted);
+                var basics = headers[HeaderNames.Authorization].ToString();
 
-                if (client is not null)
+                (string? clientId, string? clientSecret) clientData;
+
+                if (!string.IsNullOrWhiteSpace(basics))
                 {
-                    context.Items.Add(ItemKey.Client, client);
+                    clientData = await GetClientDataFromBasics(basics, context.RequestAborted);
                 }
-            }
+                else
+                {
+                    var form = request.Form;
+                    clientData = (form[AccessTokenRequestParameter.ClientId], form[AccessTokenRequestParameter.ClientSecret]);
+                }
 
-            await next.Invoke(context);
+                if (!string.IsNullOrEmpty(clientData.clientId))
+                {
+                    var client = await clientStorage.GetClientByIdAndNullableSecretAsync(clientData.clientId, clientData.clientSecret, context.RequestAborted);
+
+                    if (client is not null)
+                    {
+                        context.Items.Add(ItemKey.Client, client);
+                    }
+                }
+
+                await next.Invoke(context);
+            }
         }
 
         private static async Task<(string?, string?)> GetClientDataFromBasics(string basicsString, CancellationToken cancellationToken = default)
