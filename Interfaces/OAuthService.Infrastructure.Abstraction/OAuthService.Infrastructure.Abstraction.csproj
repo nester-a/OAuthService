@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -7,13 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\OAuth.Types.Abstraction\OAuth.Types.Abstraction\OAuth.Types.Abstraction.csproj" />
-    <ProjectReference Include="..\..\..\OAuthConstans\OAuthConstans\OAuthConstans.csproj" />
-    <ProjectReference Include="..\..\..\OAuthService.Exceptions\OAuthService.Exceptions\OAuthService.Exceptions.csproj" />
+    <ProjectReference Include="..\..\Core\OAuthService.Core\OAuthService.Core.csproj" />
   </ItemGroup>
 
 </Project>

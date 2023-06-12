@@ -1,4 +1,4 @@
-﻿using OAuthService.Interfaces.Storages;
+﻿using OAuthService.Data.Abstraction;
 
 namespace OAuthService.Data
 {

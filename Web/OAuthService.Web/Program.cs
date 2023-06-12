@@ -1,4 +1,5 @@
-using OAuthService.Web.DependencyInjection;
+using OAuthService.Data.DependencyInjection;
+using OAuthService.Infrastructure.DependencyInjection;
 using OAuthService.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,10 +17,8 @@ services.Configure<RouteOptions>(options =>
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
-
-services.AddStorages();
-services.AddMiddlewareServices();
-services.AddTokenEndpointServices();
+services.AddTestOAuthStorages();
+services.AddOAuthServiceInfrastructure();
 
 
 var app = builder.Build();

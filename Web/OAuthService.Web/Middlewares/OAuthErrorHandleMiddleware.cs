@@ -1,8 +1,8 @@
 ﻿using System.Net;
 using OAuthConstans;
 using OAuthService.Exceptions.Base;
-using OAuthService.Interfaces;
-using OAuthService.Interfaces.Builders;
+using OAuthService.Infrastructure.Abstraction;
+using OAuthService.Infrastructure.Factories;
 
 namespace OAuthService.Web.Middlewares
 {
@@ -15,7 +15,7 @@ namespace OAuthService.Web.Middlewares
             this.next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context, IErrorResponseBuilder errorResponseBuilder, IResponsePreparationService responsePreparationService)
+        public async Task InvokeAsync(HttpContext context, ErrorResponseBuilderFactory errorResponseBuilderFactory, IResponsePreparationService responsePreparationService)
         {
             try
             {
@@ -23,8 +23,10 @@ namespace OAuthService.Web.Middlewares
             }
             catch (OAuthErrorException ex)
             {
-                var error = errorResponseBuilder.FromException(ex)
-                                                .Build();
+                var builder = errorResponseBuilderFactory.Create();
+
+                var error = builder.FromException(ex)
+                                   .Build();
 
                 await responsePreparationService.PrepareAndSendResponse(context.Response,
                                                                         error,
@@ -33,9 +35,11 @@ namespace OAuthService.Web.Middlewares
             }
             catch (Exception ex)
             {
-                var error = errorResponseBuilder.AddErrorCode(ErrorResponseErrorCode.ServerError)
-                                                .AddErrorDescription(ex.Message)
-                                                .Build();
+                var builder = errorResponseBuilderFactory.Create();
+
+                var error = builder.AddErrorCode(ErrorResponseErrorCode.ServerError)
+                                   .AddErrorDescription(ex.Message)
+                                   .Build();
 
                 await responsePreparationService.PrepareAndSendResponse(context.Response,
                                                                         error,

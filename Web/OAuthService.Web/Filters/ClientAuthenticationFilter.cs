@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
-using OAuthService.Core.Types;
+using OAuthService.Core.Entities;
 using OAuthService.Exceptions;
 using OAuthService.Web.Common;
 

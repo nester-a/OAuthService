@@ -1,32 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OAuthService.Core.Types.Requests;
-using OAuthService.Core.Types;
-using OAuthService.Interfaces.Authorization;
-using OAuthService.Interfaces.Facroies;
+﻿using Microsoft.AspNetCore.Mvc;
 using OAuthService.Interfaces.Validation;
 using OAuthService.Web.Attributes;
 using OAuthService.Web.Common;
+using OAuthService.Core.Entities;
+using OAuthService.Infrastructure.Abstraction;
+using OAuthService.Types;
 
 namespace OAuthService.Web.Controllers
 {
+
+    [ClientAuthenticated]
     [ApiController]
     public class OAuthController : ControllerBase
     {
         private readonly IClientAuthorizationService clientAuthorizationService;
-        private readonly IValidationService requestValidationService;
-        private readonly IRequestResponseFactory responseFactory;
+        private readonly IAccessTokenRequestValidationService accessTokenRequestValidationService;
+        private readonly IAccessTokenResponseFactory accessTokenResponseFactory;
 
         public OAuthController(IClientAuthorizationService clientAuthorizationService,
-                               IValidationService requestValidationService,
-                               IRequestResponseFactory responseFactory)
+                               IAccessTokenRequestValidationService accessTokenRequestValidationService,
+                               IAccessTokenResponseFactory accessTokenResponseFactory)
         {
             this.clientAuthorizationService = clientAuthorizationService;
-            this.requestValidationService = requestValidationService;
-            this.responseFactory = responseFactory;
+            this.accessTokenRequestValidationService = accessTokenRequestValidationService;
+            this.accessTokenResponseFactory = accessTokenResponseFactory;
         }
 
-        [ClientAuthenticated]
         [HttpPost("/token")]
         public async Task<IActionResult> Token([FromForm] AccessTokenRequest request, CancellationToken cancellationToken = default)
         {
@@ -34,14 +33,13 @@ namespace OAuthService.Web.Controllers
 
             await clientAuthorizationService.CheckClientIsAuthorizedAsync(client!, request.GrantType, cancellationToken);
 
-            await requestValidationService.ValidateAsync(request, cancellationToken);
+            await accessTokenRequestValidationService.ValidateAsync(request, cancellationToken);
 
-            var response = await responseFactory.CreateResponseAsync(client!, request, cancellationToken);
+            var response = await accessTokenResponseFactory.CreateAsync(client!, request, cancellationToken);
 
             return Ok(response);
         }
 
-        [ClientAuthenticated]
         [HttpPost("/revoke")]
         public async Task<IActionResult> Revoke()
         {

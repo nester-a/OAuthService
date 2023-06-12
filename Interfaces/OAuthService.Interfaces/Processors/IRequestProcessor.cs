@@ -1,5 +1,5 @@
 ﻿using OAuthService.Core.Base;
-using OAuthService.Core.Types;
+using OAuthService.Core.Entities;
 using OAuthService.Core.Types.Responses;
 
 namespace OAuthService.Interfaces.Processors

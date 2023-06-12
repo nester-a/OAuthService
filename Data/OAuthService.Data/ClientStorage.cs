@@ -1,6 +1,7 @@
 ﻿using OAuthConstans;
-using OAuthService.Core.Types;
-using OAuthService.Interfaces.Storages;
+using OAuthService.Core.Entities;
+using OAuthService.Data.Abstraction;
+
 
 namespace OAuthService.Data
 {

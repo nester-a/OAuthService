@@ -18,8 +18,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Core\OAuthService.Core\OAuthService.Core.csproj" />
     <ProjectReference Include="..\..\Data\OAuthService.Data\OAuthService.Data.csproj" />
-    <ProjectReference Include="..\..\Interfaces\OAuthService.Interfaces\OAuthService.Interfaces.csproj" />
-    <ProjectReference Include="..\..\Services\OAuthService.Services\OAuthService.Services.csproj" />
+    <ProjectReference Include="..\..\Interfaces\OAuthService.Infrastructure.Abstraction\OAuthService.Infrastructure.Abstraction.csproj" />
+    <ProjectReference Include="..\..\Services\OAuthService.Infrastructure\OAuthService.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

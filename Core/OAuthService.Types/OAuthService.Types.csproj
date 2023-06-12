@@ -13,7 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\OAuth.Types.Abstraction\OAuth.Types.Abstraction\OAuth.Types.Abstraction.csproj" />
     <ProjectReference Include="..\..\..\OAuthConstans\OAuthConstans\OAuthConstans.csproj" />
-    <ProjectReference Include="..\..\..\OAuthService.Exceptions\OAuthService.Exceptions\OAuthService.Exceptions.csproj" />
   </ItemGroup>
 
 </Project>
