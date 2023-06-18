@@ -3,7 +3,7 @@ using OAuth.Types.Abstraction;
 using OAuthConstans;
 using System.ComponentModel.DataAnnotations;
 
-namespace OAuthService.Types
+namespace OAuthService.Web.Models
 {
     public record AuthorizationRequest : IAuthorizationRequest
     {

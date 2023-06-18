@@ -1,17 +1,26 @@
 using OAuthService.Data.DependencyInjection;
 using OAuthService.Infrastructure.DependencyInjection;
+using OAuthService.Web.Authentication;
 using OAuthService.Web.Middlewares;
+using OAuthService.Web.NamingPolicies;
 
 var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 
 // Add services to the container.
 services.AddRazorPages();
-services.AddControllers();
+services.AddControllers()
+        .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = new SnakeCaseNamingPolicy());
+
+//Делаем так, чтобы все пути были с маленькой буквы
 services.Configure<RouteOptions>(options =>
 {
     options.LowercaseUrls = true;
 });
+
+//Устанавливаем схему аутентификации Basic
+services.AddAuthentication(options => options.DefaultScheme = BasicDefaults.AuthenticationScheme)
+        .AddScheme<BasicOptions, BasicHandler>(BasicDefaults.AuthenticationScheme, options => { });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();

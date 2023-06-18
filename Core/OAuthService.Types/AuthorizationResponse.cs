@@ -2,7 +2,7 @@
 using OAuthConstans;
 using System.Text.Json.Serialization;
 
-namespace OAuthService.Types
+namespace OAuthService.Infrastructure.Types
 {
     public class AuthorizationResponse : IAuthorizationResponse
     {

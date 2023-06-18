@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\OAuthService.Exceptions\OAuthService.Exceptions\OAuthService.Exceptions.csproj" />
     <ProjectReference Include="..\..\Core\OAuthService.Core\OAuthService.Core.csproj" />
-    <ProjectReference Include="..\..\Core\OAuthService.Types\OAuthService.Types.csproj" />
+    <ProjectReference Include="..\..\Core\OAuthService.Types\OAuthService.Infrastructure.Types.csproj" />
     <ProjectReference Include="..\..\Interfaces\OAuthService.Data.Abstraction\OAuthService.Data.Abstraction.csproj" />
     <ProjectReference Include="..\..\Interfaces\OAuthService.Infrastructure.Abstraction\OAuthService.Infrastructure.Abstraction.csproj" />
   </ItemGroup>

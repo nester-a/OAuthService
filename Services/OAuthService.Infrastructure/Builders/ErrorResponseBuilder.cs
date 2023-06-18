@@ -1,6 +1,6 @@
 ﻿using OAuth.Types.Abstraction;
 using OAuthService.Exceptions.Base;
-using OAuthService.Types;
+using OAuthService.Infrastructure.Types;
 
 namespace OAuthService.Infrastructure.Builders
 {

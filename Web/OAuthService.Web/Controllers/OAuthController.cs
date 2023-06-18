@@ -4,10 +4,10 @@ using OAuthService.Web.Attributes;
 using OAuthService.Web.Common;
 using OAuthService.Core.Entities;
 using OAuthService.Infrastructure.Abstraction;
-using OAuthService.Types;
 using OAuthService.Data.Abstraction;
 using OAuthService.Core.Enums;
 using OAuthConstans;
+using OAuthService.Web.Models;
 
 namespace OAuthService.Web.Controllers
 {

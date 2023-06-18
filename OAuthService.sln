@@ -27,11 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuth.Types.Abstraction", "..\OAuth.Types.Abstraction\OAuth.Types.Abstraction\OAuth.Types.Abstraction.csproj", "{37BE2312-4A50-4C58-BEEB-0DD4884CB5F3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Types", "Core\OAuthService.Types\OAuthService.Types.csproj", "{8BE66A04-8C99-4447-B79E-ABB8552A90C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Infrastructure.Types", "Core\OAuthService.Types\OAuthService.Infrastructure.Types.csproj", "{8BE66A04-8C99-4447-B79E-ABB8552A90C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthService.Infrastructure.Abstraction", "Interfaces\OAuthService.Infrastructure.Abstraction\OAuthService.Infrastructure.Abstraction.csproj", "{8DC0A602-27D0-4F40-8504-D5B8242C6E2D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Infrastructure.Abstraction", "Interfaces\OAuthService.Infrastructure.Abstraction\OAuthService.Infrastructure.Abstraction.csproj", "{8DC0A602-27D0-4F40-8504-D5B8242C6E2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OAuthService.Data.Abstraction", "Interfaces\OAuthService.Data.Abstraction\OAuthService.Data.Abstraction.csproj", "{AB87D336-4F0F-46B8-A740-8D7B07BC0E99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OAuthService.Data.Abstraction", "Interfaces\OAuthService.Data.Abstraction\OAuthService.Data.Abstraction.csproj", "{AB87D336-4F0F-46B8-A740-8D7B07BC0E99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

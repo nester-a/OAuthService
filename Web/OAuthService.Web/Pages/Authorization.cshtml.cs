@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using OAuthService.Types;
+using OAuthService.Web.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace OAuthService.Web.Pages

@@ -2,7 +2,7 @@
 using OAuth.Types.Abstraction;
 using OAuthConstans;
 
-namespace OAuthService.Types
+namespace OAuthService.Web.Models
 {
     public record AccessTokenRequest : IAccessTokenRequest
     {
