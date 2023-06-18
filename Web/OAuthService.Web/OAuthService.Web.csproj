@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Core\OAuthService.Core\OAuthService.Core.csproj" />
     <ProjectReference Include="..\..\Data\OAuthService.Data\OAuthService.Data.csproj" />
     <ProjectReference Include="..\..\Interfaces\OAuthService.Infrastructure.Abstraction\OAuthService.Infrastructure.Abstraction.csproj" />

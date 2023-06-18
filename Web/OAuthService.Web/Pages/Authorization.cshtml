@@ -14,10 +14,20 @@
     <div class="form-group">
         <label asp-for="Input.Username"></label>
         <input class="form-control" asp-for="Input.Username"/>
+        <span asp-validation-for="Input.Username"></span>
     </div>
     <div class="form-group">
         <label asp-for="Input.Password"></label>
         <input class="form-control" asp-for="Input.Password"/>
+        <span asp-validation-for="Input.Password"></span>
+    </div>
+    <div class="form-group">
+        <span asp-validation-for="Input.ResponseType"></span>
+    </div>
+    <div class="form-group">
+        <span asp-validation-for="Input.ClientId"></span>
+    </div>
+    <div asp-validation-summary="ModelOnly">
     </div>
     <button type="submit" class="btn btn-primary">Authorize</button>
 </form>
