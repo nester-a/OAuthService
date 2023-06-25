@@ -8,7 +8,7 @@ namespace OAuthService.Infrastructure.Services
 {
     public class AccessTokenRequestValidationService : IAccessTokenRequestValidationService
     {
-        public async Task ValidateAsync(IAccessTokenRequest request, CancellationToken cancellation = default)
+        public async Task<bool> IsValidAsync(IAccessTokenRequest request, CancellationToken cancellation = default)
         {
             cancellation.ThrowIfCancellationRequested();
 
@@ -42,7 +42,16 @@ namespace OAuthService.Infrastructure.Services
 
             await Task.WhenAll(areNotNullTask, areNullTask);
 
-            if (!areNotNullTask.Result || !areNullTask.Result)
+            return areNotNullTask.Result && areNullTask.Result;
+        }
+
+        public async Task ValidateAsync(IAccessTokenRequest request, CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
+
+            var res = await IsValidAsync(request, cancellation);
+
+            if (!res)
             {
                 throw new InvalidRequestException(nameof(request.GrantType));
             }

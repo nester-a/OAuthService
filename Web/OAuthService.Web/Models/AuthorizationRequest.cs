@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OAuth.Types.Abstraction;
 using OAuthConstans;
+using OAuthService.Web.Attributes;
 
 namespace OAuthService.Web.Models
 {
     public record AuthorizationRequest : IAuthorizationRequest
     {
         [FromQuery(Name = AuthorizationRequestParameter.ResponseType)]
+        [AllowedStringValues(AuthorizationRequestResponseType.Token, AuthorizationRequestResponseType.Code)]
         public string ResponseType { get; set; } = string.Empty;
 
         [FromQuery(Name = AuthorizationRequestParameter.ClientId)]

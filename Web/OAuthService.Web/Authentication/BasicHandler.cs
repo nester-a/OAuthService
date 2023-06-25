@@ -53,8 +53,15 @@ namespace OAuthService.Web.Authentication
 
             var identity = new ClaimsIdentity(nameof(BasicHandler));
 
-
-            Claim[] claims = new Claim[] { new Claim(ClaimTypes.Name, basic) };
+            Claim[] claims;
+            if (Options.GetPrincipalClaimsFunc is not null)
+            {
+                claims = Options.GetPrincipalClaimsFunc(basicAsArray[0], basicAsArray[1]);
+            }
+            else
+            {
+                claims = new Claim[] { new Claim(ClaimTypes.Name, basic) };
+            }
 
             identity.AddClaims(claims);
 

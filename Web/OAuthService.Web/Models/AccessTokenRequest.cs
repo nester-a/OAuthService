@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OAuth.Types.Abstraction;
 using OAuthConstans;
+using OAuthService.Web.Attributes;
 
 namespace OAuthService.Web.Models
 {
     public record AccessTokenRequest : IAccessTokenRequest
     {
         [FromForm(Name = AccessTokenRequestParameter.GrantType)]
+        [AllowedStringValues(AccessTokenRequestGrantType.AuthorizationCode, AccessTokenRequestGrantType.Password, AccessTokenRequestGrantType.RefreshToken, AccessTokenRequestGrantType.ClientCredentials)]
         public string GrantType { get; set; } = string.Empty;
 
         [FromForm(Name = AccessTokenRequestParameter.Code)]

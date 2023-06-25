@@ -1,10 +1,15 @@
 ﻿using OAuth.Types.Abstraction;
-using OAuthService.Core.Entities;
 
 namespace OAuthService.Infrastructure.Abstraction
 {
     public interface IAccessTokenResponseFactory
     {
-        Task<IAccessTokenResponse> CreateAsync(Client client, IAccessTokenRequest request, CancellationToken cancellation = default);
+        Task<IAccessTokenResponse> CreateForClientCredentialsAsync(string clientId, string tokenKey, CancellationToken cancellation = default);
+
+        Task<IAccessTokenResponse> CreateForRefreshTokenAsync(string refreshToken, string clientId, string tokenKey, CancellationToken cancellation = default);
+
+        Task<IAccessTokenResponse> CreateForAuthorizationCodeAsync(string code, string clientId, string tokenKey, CancellationToken cancellation = default);
+
+        Task<IAccessTokenResponse> CreateForPasswordAsync(string username, string password, string clientId, string tokenKey, CancellationToken cancellation = default);
     }
 }

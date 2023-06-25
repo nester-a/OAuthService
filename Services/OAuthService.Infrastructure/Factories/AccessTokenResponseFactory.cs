@@ -1,6 +1,5 @@
 ﻿using OAuth.Types.Abstraction;
 using OAuthConstans;
-using OAuthService.Core.Entities;
 using OAuthService.Core.Enums;
 using OAuthService.Data.Abstraction;
 using OAuthService.Exceptions;
@@ -30,62 +29,97 @@ namespace OAuthService.Infrastructure.Factories
             this.accessTokenResponseBuilderFactory = accessTokenResponseBuilderFactory;
         }
 
-        public async Task<IAccessTokenResponse> CreateAsync(Client client, IAccessTokenRequest request, CancellationToken cancellation = default)
+        public async Task<IAccessTokenResponse> CreateForClientCredentialsAsync(string clientId, 
+                                                                                string tokenKey,
+                                                                                CancellationToken cancellation = default)
         {
             cancellation.ThrowIfCancellationRequested();
 
-            string? tokenSub;
+            return await CreateAsync(clientId, null, tokenKey, false, cancellation);
+        }
 
-            switch (request.GrantType)
+        public async Task<IAccessTokenResponse> CreateForRefreshTokenAsync(string refreshToken, 
+                                                                           string clientId,
+                                                                           string tokenKey, 
+                                                                           CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
+
+            var sub = await tokenStorage.GetUserIdByValidTokenAsync(refreshToken, cancellation);
+
+            if (string.IsNullOrWhiteSpace(sub))
             {
-                case AccessTokenRequestGrantType.ClientCredentials:
-                    tokenSub = client.Id;
-                    break;
-                case AccessTokenRequestGrantType.RefreshToken:
-                    tokenSub = await tokenStorage.GetUserIdByValidTokenAsync(request.RefreshToken!, cancellation);
-                    break;
-                case AccessTokenRequestGrantType.AuthorizationCode:
-                    tokenSub = await codeStorage.GetUserIdByCodeAndClientIdAsync(request.Code!, request.ClientId!, cancellation);
-                    break;
-                case AccessTokenRequestGrantType.Password:
-                    var hash = request.Password!;
-                    tokenSub = await userStorage.GetUserIdByUsernameAndPasswordHashAsync(request.Username!, hash, cancellation);
-                    break;
-                default:
-                    throw new UnsupportedGrantTypeException(request.GrantType);
+                throw new InvalidGrantException("Invalid refresh token");
             }
 
-            if (string.IsNullOrEmpty(tokenSub))
+            return await CreateAsync(sub, clientId, tokenKey, true, cancellation);
+        }
+
+        public async Task<IAccessTokenResponse> CreateForAuthorizationCodeAsync(string code,
+                                                                                string clientId,
+                                                                                string tokenKey,
+                                                                                CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
+
+            var sub = await codeStorage.GetUserIdByCodeAndClientIdAsync(code, clientId, cancellation); 
+
+            if (string.IsNullOrWhiteSpace(sub))
             {
-                throw new InvalidGrantException(request.GrantType);
+                throw new InvalidGrantException("Invalid code");
             }
 
+            return await CreateAsync(sub, clientId, tokenKey, false, cancellation);
+        }
+
+        public async Task<IAccessTokenResponse> CreateForPasswordAsync(string username,
+                                                                       string password, 
+                                                                       string clientId,
+                                                                       string tokenKey,
+                                                                       CancellationToken cancellation = default)
+        {
+            cancellation.ThrowIfCancellationRequested();
+
+            var hash = password;
+
+            var sub = await userStorage.GetUserIdByUsernameAndPasswordHashAsync(username, hash, cancellation); 
+            
+            if (string.IsNullOrWhiteSpace(sub))
+            {
+                throw new InvalidGrantException("Invalid username or password");
+            }
+
+            return await CreateAsync(sub, clientId, tokenKey, true, cancellation);
+        }
+
+        private async Task<IAccessTokenResponse> CreateAsync(string tokenSub, string? tokenAud, string tokenKey, bool refreshTokenRequired, CancellationToken cancellation = default)
+        {
             var now = DateTime.UtcNow;
             var exp = now.AddDays(1);
             var jti = Guid.NewGuid().ToString();
-            var key = client.TokenKey;
 
-            var jwtBuilder = jwtBuilderFactory.Create().SignedWithKey(key)
+            var jwtBuilder = jwtBuilderFactory.Create().SignedWithKey(tokenKey)
                                                        .AddIat(now)
                                                        .AddNbf(now)
                                                        .AddExp(exp)
                                                        .AddJti(jti)
                                                        .AddSub(tokenSub);
 
-            if(request.GrantType != AccessTokenRequestGrantType.ClientCredentials)
-            {
-                jwtBuilder = jwtBuilder.AddAud(client.Id);
-            }
+            string token;
 
-            var token = await jwtBuilder.BuildAsync();
-
-            if (request.GrantType == AccessTokenRequestGrantType.ClientCredentials)
+            if (!string.IsNullOrWhiteSpace(tokenAud))
             {
-                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, null, cancellation);
+                jwtBuilder = jwtBuilder.AddAud(tokenAud);
+
+                token = await jwtBuilder.BuildAsync();
+
+                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, tokenSub, cancellation);
             }
             else
             {
-                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, tokenSub, cancellation);
+                token = await jwtBuilder.BuildAsync();
+
+                await tokenStorage.SaveTokenAsync(jti, token, TokenType.AccessToken, exp, null, cancellation);
             }
 
 
@@ -93,7 +127,7 @@ namespace OAuthService.Infrastructure.Factories
                                                                             .AddTokenType(AccessTokenType.Bearer)
                                                                             .AddExpiresIn(exp.ToUnixTimestamp());
 
-            if (request.GrantType != AccessTokenRequestGrantType.ClientCredentials)
+            if (refreshTokenRequired)
             {
                 jti = Guid.NewGuid().ToString();
                 var refreshToken = Guid.NewGuid().ToString();
@@ -104,8 +138,8 @@ namespace OAuthService.Infrastructure.Factories
                 responseBuilder = responseBuilder.AddRefreshToken(refreshToken);
             }
 
-
             return responseBuilder.Build();
         }
+
     }
 }

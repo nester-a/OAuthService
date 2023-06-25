@@ -1,6 +1,7 @@
 using OAuthService.Data.DependencyInjection;
 using OAuthService.Infrastructure.DependencyInjection;
 using OAuthService.Web.Authentication;
+using OAuthService.Web.Filters;
 using OAuthService.Web.Middlewares;
 using OAuthService.Web.NamingPolicies;
 
@@ -22,12 +23,16 @@ services.Configure<RouteOptions>(options =>
 services.AddAuthentication(options => options.DefaultScheme = BasicDefaults.AuthenticationScheme)
         .AddScheme<BasicOptions, BasicHandler>(BasicDefaults.AuthenticationScheme, options => { });
 
+//Подключаем фильтры
+services.AddScoped<ContainsRequiredParametersActionFilter>();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 services.AddEndpointsApiExplorer();
 services.AddSwaggerGen();
 
 services.AddTestOAuthStorages();
 services.AddOAuthServiceInfrastructure();
+
 
 
 var app = builder.Build();
